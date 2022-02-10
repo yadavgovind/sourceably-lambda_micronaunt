@@ -13,8 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
+
 @Entity
 @Builder
 @NoArgsConstructor
@@ -40,7 +39,13 @@ public class SoftwareEvaluation {
 	@Column(name = "criteria_id")
 	private Long criteriaId;
 
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
 
 

@@ -8,17 +8,12 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.oms.projectbuddy.utils.NdaStatus;
 import com.oms.projectbuddy.utils.StatusEnum;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 
 @Entity
-@Getter
-@Setter
 @Table(name = "sbly_project_bid_post")
 public class ProjectBidPost {
     @Id
@@ -113,4 +108,259 @@ public class ProjectBidPost {
     @Transient
     private double ranking;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getBidId() {
+        return bidId;
+    }
+
+    public void setBidId(Long bidId) {
+        this.bidId = bidId;
+    }
+
+    public String getSystemGeneratedProjectId() {
+        return systemGeneratedProjectId;
+    }
+
+    public void setSystemGeneratedProjectId(String systemGeneratedProjectId) {
+        this.systemGeneratedProjectId = systemGeneratedProjectId;
+    }
+
+    public String getConsumerId() {
+        return consumerId;
+    }
+
+    public void setConsumerId(String consumerId) {
+        this.consumerId = consumerId;
+    }
+
+    public String getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(String providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getNdaFile() {
+        return ndaFile;
+    }
+
+    public void setNdaFile(String ndaFile) {
+        this.ndaFile = ndaFile;
+    }
+
+    public String getNdaFileName() {
+        return ndaFileName;
+    }
+
+    public void setNdaFileName(String ndaFileName) {
+        this.ndaFileName = ndaFileName;
+    }
+
+    public Boolean getNdaStatus() {
+        return ndaStatus;
+    }
+
+    public void setNdaStatus(Boolean ndaStatus) {
+        this.ndaStatus = ndaStatus;
+    }
+
+    public StatusEnum getProposalStatus() {
+        return proposalStatus;
+    }
+
+    public void setProposalStatus(StatusEnum proposalStatus) {
+        this.proposalStatus = proposalStatus;
+    }
+
+    public LocalDate getNdaUploadDate() {
+        return ndaUploadDate;
+    }
+
+    public void setNdaUploadDate(LocalDate ndaUploadDate) {
+        this.ndaUploadDate = ndaUploadDate;
+    }
+
+    public NdaStatus getNdaApprovalStatus() {
+        return ndaApprovalStatus;
+    }
+
+    public void setNdaApprovalStatus(NdaStatus ndaApprovalStatus) {
+        this.ndaApprovalStatus = ndaApprovalStatus;
+    }
+
+    public String getNdaApprovedBy() {
+        return ndaApprovedBy;
+    }
+
+    public void setNdaApprovedBy(String ndaApprovedBy) {
+        this.ndaApprovedBy = ndaApprovedBy;
+    }
+
+    public LocalDate getNdaApprovalDate() {
+        return ndaApprovalDate;
+    }
+
+    public void setNdaApprovalDate(LocalDate ndaApprovalDate) {
+        this.ndaApprovalDate = ndaApprovalDate;
+    }
+
+    public String getCoverLetter() {
+        return coverLetter;
+    }
+
+    public void setCoverLetter(String coverLetter) {
+        this.coverLetter = coverLetter;
+    }
+
+    public Long getProjectCost() {
+        return projectCost;
+    }
+
+    public void setProjectCost(Long projectCost) {
+        this.projectCost = projectCost;
+    }
+
+    public LocalDate getProjectBidDate() {
+        return projectBidDate;
+    }
+
+    public void setProjectBidDate(LocalDate projectBidDate) {
+        this.projectBidDate = projectBidDate;
+    }
+
+    public String getBidPostedBy() {
+        return bidPostedBy;
+    }
+
+    public void setBidPostedBy(String bidPostedBy) {
+        this.bidPostedBy = bidPostedBy;
+    }
+
+    public String getNdaComment() {
+        return ndaComment;
+    }
+
+    public void setNdaComment(String ndaComment) {
+        this.ndaComment = ndaComment;
+    }
+
+    public Integer getBidCount() {
+        return bidCount;
+    }
+
+    public void setBidCount(Integer bidCount) {
+        this.bidCount = bidCount;
+    }
+
+    public String getProposalStatusValue() {
+        return proposalStatusValue;
+    }
+
+    public void setProposalStatusValue(String proposalStatusValue) {
+        this.proposalStatusValue = proposalStatusValue;
+    }
+
+    public List<ProjectBidDocuments> getBidDocuments() {
+        return bidDocuments;
+    }
+
+    public void setBidDocuments(List<ProjectBidDocuments> bidDocuments) {
+        this.bidDocuments = bidDocuments;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public Long getIntendedCost() {
+        return intendedCost;
+    }
+
+    public void setIntendedCost(Long intendedCost) {
+        this.intendedCost = intendedCost;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public List<ProjectDocumentUpload> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<ProjectDocumentUpload> documents) {
+        this.documents = documents;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getSupplierCompanyaddress() {
+        return supplierCompanyaddress;
+    }
+
+    public void setSupplierCompanyaddress(String supplierCompanyaddress) {
+        this.supplierCompanyaddress = supplierCompanyaddress;
+    }
+
+    public String getServicetagline() {
+        return servicetagline;
+    }
+
+    public void setServicetagline(String servicetagline) {
+        this.servicetagline = servicetagline;
+    }
+
+    public String getCompanydescription() {
+        return companydescription;
+    }
+
+    public void setCompanydescription(String companydescription) {
+        this.companydescription = companydescription;
+    }
+
+    public String getCompanyimage() {
+        return companyimage;
+    }
+
+    public void setCompanyimage(String companyimage) {
+        this.companyimage = companyimage;
+    }
+
+    public double getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(double ranking) {
+        this.ranking = ranking;
+    }
 }

@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "pb_provider_bcertificate_data")
 public class ProviderBCertificateData {
@@ -67,4 +66,148 @@ public class ProviderBCertificateData {
     @OneToOne(mappedBy = "providerBCertificateData",cascade=CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     private BCertificatePercentage bCertificatePercentage;
+
+    public Long getbCertificateDataId() {
+        return bCertificateDataId;
+    }
+
+    public void setbCertificateDataId(Long bCertificateDataId) {
+        this.bCertificateDataId = bCertificateDataId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Long getCertificateId() {
+        return certificateId;
+    }
+
+    public void setCertificateId(Long certificateId) {
+        this.certificateId = certificateId;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public Long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Long startDate) {
+        this.startDate = startDate;
+    }
+
+    public Long getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Long endDate) {
+        this.endDate = endDate;
+    }
+
+    public Boolean getSelfAttested() {
+        return selfAttested;
+    }
+
+    public void setSelfAttested(Boolean selfAttested) {
+        this.selfAttested = selfAttested;
+    }
+
+    public Boolean getAdminVerified() {
+        return adminVerified;
+    }
+
+    public void setAdminVerified(Boolean adminVerified) {
+        this.adminVerified = adminVerified;
+    }
+
+    public Long getAdminVerifiedDate() {
+        return adminVerifiedDate;
+    }
+
+    public void setAdminVerifiedDate(Long adminVerifiedDate) {
+        this.adminVerifiedDate = adminVerifiedDate;
+    }
+
+    public String getAdminVerifiedUserId() {
+        return adminVerifiedUserId;
+    }
+
+    public void setAdminVerifiedUserId(String adminVerifiedUserId) {
+        this.adminVerifiedUserId = adminVerifiedUserId;
+    }
+
+    public Boolean getAdminCertified() {
+        return adminCertified;
+    }
+
+    public void setAdminCertified(Boolean adminCertified) {
+        this.adminCertified = adminCertified;
+    }
+
+    public Long getAdminCertifiedDate() {
+        return adminCertifiedDate;
+    }
+
+    public void setAdminCertifiedDate(Long adminCertifiedDate) {
+        this.adminCertifiedDate = adminCertifiedDate;
+    }
+
+    public String getAdminCertifiedUserId() {
+        return adminCertifiedUserId;
+    }
+
+    public void setAdminCertifiedUserId(String adminCertifiedUserId) {
+        this.adminCertifiedUserId = adminCertifiedUserId;
+    }
+
+    public String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        this.userComment = userComment;
+    }
+
+    public String getAdminComment() {
+        return adminComment;
+    }
+
+    public void setAdminComment(String adminComment) {
+        this.adminComment = adminComment;
+    }
+
+    public Long getAdminCommentDate() {
+        return adminCommentDate;
+    }
+
+    public void setAdminCommentDate(Long adminCommentDate) {
+        this.adminCommentDate = adminCommentDate;
+    }
+
+    public String getAdminCommentBy() {
+        return adminCommentBy;
+    }
+
+    public void setAdminCommentBy(String adminCommentBy) {
+        this.adminCommentBy = adminCommentBy;
+    }
+
+    public BCertificatePercentage getbCertificatePercentage() {
+        return bCertificatePercentage;
+    }
+
+    public void setbCertificatePercentage(BCertificatePercentage bCertificatePercentage) {
+        this.bCertificatePercentage = bCertificatePercentage;
+    }
 }

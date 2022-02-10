@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "pb_provider_skills_matrix")
 public class SupplierSkillMatrix {
@@ -33,5 +32,75 @@ public class SupplierSkillMatrix {
     private String updatedBy;
 
 
+    public Long getPsmid() {
+        return psmid;
+    }
 
+    public void setPsmid(Long psmid) {
+        this.psmid = psmid;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getSkillMatrixId() {
+        return skillMatrixId;
+    }
+
+    public void setSkillMatrixId(String skillMatrixId) {
+        this.skillMatrixId = skillMatrixId;
+    }
+
+    public String getLevelHearichyName() {
+        return levelHearichyName;
+    }
+
+    public void setLevelHearichyName(String levelHearichyName) {
+        this.levelHearichyName = levelHearichyName;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Long getCreatedEpochTime() {
+        return createdEpochTime;
+    }
+
+    public void setCreatedEpochTime(Long createdEpochTime) {
+        this.createdEpochTime = createdEpochTime;
+    }
+
+    public Long getUpdatedEpochTime() {
+        return updatedEpochTime;
+    }
+
+    public void setUpdatedEpochTime(Long updatedEpochTime) {
+        this.updatedEpochTime = updatedEpochTime;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
 }

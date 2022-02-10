@@ -10,8 +10,6 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @Table(name="state")
 public class State {
@@ -23,6 +21,11 @@ public class State {
 	    @Column(name = "country_id")
 	    private Long countryId;
 
+	public Long getId() {
+		return id;
+	}
 
-
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

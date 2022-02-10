@@ -10,8 +10,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "pb_provider_certificate_data")
-@Getter
-@Setter
 public class ProviderCertificateData {
 
     @Id
@@ -76,4 +74,155 @@ public class ProviderCertificateData {
     @Transient
     private String userName;
 
+    public Long getProviderCertificateId() {
+        return providerCertificateId;
+    }
+
+    public void setProviderCertificateId(Long providerCertificateId) {
+        this.providerCertificateId = providerCertificateId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Long getCertificateId() {
+        return certificateId;
+    }
+
+    public void setCertificateId(Long certificateId) {
+        this.certificateId = certificateId;
+    }
+
+    public CertificationType getCertificationType() {
+        return certificationType;
+    }
+
+    public void setCertificationType(CertificationType certificationType) {
+        this.certificationType = certificationType;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public LocalDate getCreatedEpochTime() {
+        return createdEpochTime;
+    }
+
+    public void setCreatedEpochTime(LocalDate createdEpochTime) {
+        this.createdEpochTime = createdEpochTime;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDate getLastUpdatedEpochTime() {
+        return lastUpdatedEpochTime;
+    }
+
+    public void setLastUpdatedEpochTime(LocalDate lastUpdatedEpochTime) {
+        this.lastUpdatedEpochTime = lastUpdatedEpochTime;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public int getCommentScore() {
+        return commentScore;
+    }
+
+    public void setCommentScore(int commentScore) {
+        this.commentScore = commentScore;
+    }
+
+    public String getProviderOptions() {
+        return providerOptions;
+    }
+
+    public void setProviderOptions(String providerOptions) {
+        this.providerOptions = providerOptions;
+    }
+
+    public int getProviderOptionScore() {
+        return providerOptionScore;
+    }
+
+    public void setProviderOptionScore(int providerOptionScore) {
+        this.providerOptionScore = providerOptionScore;
+    }
+
+    public int getEvidenceFileScore() {
+        return evidenceFileScore;
+    }
+
+    public void setEvidenceFileScore(int evidenceFileScore) {
+        this.evidenceFileScore = evidenceFileScore;
+    }
+
+    public List<?> getAttachmentDetails() {
+        return attachmentDetails;
+    }
+
+    public void setAttachmentDetails(List<?> attachmentDetails) {
+        this.attachmentDetails = attachmentDetails;
+    }
+
+    public List<?> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<?> history) {
+        this.history = history;
+    }
+
+    public String getCertificationName() {
+        return certificationName;
+    }
+
+    public void setCertificationName(String certificationName) {
+        this.certificationName = certificationName;
+    }
+
+    public String getCertificationNameDetails() {
+        return certificationNameDetails;
+    }
+
+    public void setCertificationNameDetails(String certificationNameDetails) {
+        this.certificationNameDetails = certificationNameDetails;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }

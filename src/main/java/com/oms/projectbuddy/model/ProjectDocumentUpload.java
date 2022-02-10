@@ -13,8 +13,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "pb_project_document_upload")
 public class ProjectDocumentUpload {
@@ -44,5 +42,75 @@ public class ProjectDocumentUpload {
     @Transient
     private String userUploadedDocumentName;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(Long documentId) {
+        this.documentId = documentId;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
+    }
+
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public String getProjectCode() {
+        return projectCode;
+    }
+
+    public void setProjectCode(String projectCode) {
+        this.projectCode = projectCode;
+    }
+
+    public LocalDate getRequestedDate() {
+        return requestedDate;
+    }
+
+    public void setRequestedDate(LocalDate requestedDate) {
+        this.requestedDate = requestedDate;
+    }
+
+    public String getUserUplodedDocumentUrl() {
+        return userUplodedDocumentUrl;
+    }
+
+    public void setUserUplodedDocumentUrl(String userUplodedDocumentUrl) {
+        this.userUplodedDocumentUrl = userUplodedDocumentUrl;
+    }
+
+    public String getUserUploadedDocumentName() {
+        return userUploadedDocumentName;
+    }
+
+    public void setUserUploadedDocumentName(String userUploadedDocumentName) {
+        this.userUploadedDocumentName = userUploadedDocumentName;
+    }
 }

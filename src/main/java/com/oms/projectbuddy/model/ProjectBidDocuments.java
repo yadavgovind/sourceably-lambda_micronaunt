@@ -12,8 +12,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Setter
-@Getter
 @Entity
 @Table(name = "pb_project_bid_documents")
 public class ProjectBidDocuments {
@@ -39,4 +37,12 @@ public class ProjectBidDocuments {
     private Double score;
     @Column(name = "submitted_on")
     private LocalDate submittedOn;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

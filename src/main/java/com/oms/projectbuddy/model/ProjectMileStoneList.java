@@ -13,8 +13,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "sbly_project_milestone_list")
 public class ProjectMileStoneList {
@@ -62,4 +60,75 @@ public class ProjectMileStoneList {
 
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getMilestoneId() {
+		return milestoneId;
+	}
+
+	public void setMilestoneId(Long milestoneId) {
+		this.milestoneId = milestoneId;
+	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
+	public StatusEnum getMilestoneType() {
+		return milestoneType;
+	}
+
+	public void setMilestoneType(StatusEnum milestoneType) {
+		this.milestoneType = milestoneType;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDate getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(LocalDate updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 }

@@ -5,8 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "pb_membership_plan_selection")
 public class MembershipPlanSelection {
@@ -47,4 +45,139 @@ public class MembershipPlanSelection {
     @Column(name="is_deleted")
     private Boolean isDeleted;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getMembershipPlanId() {
+        return membershipPlanId;
+    }
+
+    public void setMembershipPlanId(String membershipPlanId) {
+        this.membershipPlanId = membershipPlanId;
+    }
+
+    public String getPlanName() {
+        return planName;
+    }
+
+    public void setPlanName(String planName) {
+        this.planName = planName;
+    }
+
+    public Long getPlanCost() {
+        return planCost;
+    }
+
+    public void setPlanCost(Long planCost) {
+        this.planCost = planCost;
+    }
+
+    public String getPaymentCycle() {
+        return paymentCycle;
+    }
+
+    public void setPaymentCycle(String paymentCycle) {
+        this.paymentCycle = paymentCycle;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
+    public String getPaymentTransactionId() {
+        return paymentTransactionId;
+    }
+
+    public void setPaymentTransactionId(String paymentTransactionId) {
+        this.paymentTransactionId = paymentTransactionId;
+    }
+
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public Long getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Long paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public Long getNextBillingDate() {
+        return nextBillingDate;
+    }
+
+    public void setNextBillingDate(Long nextBillingDate) {
+        this.nextBillingDate = nextBillingDate;
+    }
+
+    public Boolean getPlanStatus() {
+        return planStatus;
+    }
+
+    public void setPlanStatus(Boolean planStatus) {
+        this.planStatus = planStatus;
+    }
+
+    public Boolean getTrailStatus() {
+        return trailStatus;
+    }
+
+    public void setTrailStatus(Boolean trailStatus) {
+        this.trailStatus = trailStatus;
+    }
+
+    public Long getTrailStartDate() {
+        return trailStartDate;
+    }
+
+    public void setTrailStartDate(Long trailStartDate) {
+        this.trailStartDate = trailStartDate;
+    }
+
+    public Long getTrailExpiryDate() {
+        return trailExpiryDate;
+    }
+
+    public void setTrailExpiryDate(Long trailExpiryDate) {
+        this.trailExpiryDate = trailExpiryDate;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 }

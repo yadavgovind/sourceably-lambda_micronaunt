@@ -1,13 +1,7 @@
 package com.oms.projectbuddy.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "pb_itcertification_user_history")
 public class ITCertificationUserHistory {
@@ -36,5 +30,67 @@ public class ITCertificationUserHistory {
     @Column(name = "history_created_epoch_time")
     private Long historyCreatedEpochTime;
 
+    public Long getHistoryId() {
+        return historyId;
+    }
 
+    public void setHistoryId(Long historyId) {
+        this.historyId = historyId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Long getCertificateId() {
+        return certificateId;
+    }
+
+    public void setCertificateId(Long certificateId) {
+        this.certificateId = certificateId;
+    }
+
+    public Long getCertificateDataId() {
+        return certificateDataId;
+    }
+
+    public void setCertificateDataId(Long certificateDataId) {
+        this.certificateDataId = certificateDataId;
+    }
+
+    public String getEditedArea() {
+        return editedArea;
+    }
+
+    public void setEditedArea(String editedArea) {
+        this.editedArea = editedArea;
+    }
+
+    public String getEditedBy() {
+        return editedBy;
+    }
+
+    public void setEditedBy(String editedBy) {
+        this.editedBy = editedBy;
+    }
+
+    public String getEditDetails() {
+        return editDetails;
+    }
+
+    public void setEditDetails(String editDetails) {
+        this.editDetails = editDetails;
+    }
+
+    public Long getHistoryCreatedEpochTime() {
+        return historyCreatedEpochTime;
+    }
+
+    public void setHistoryCreatedEpochTime(Long historyCreatedEpochTime) {
+        this.historyCreatedEpochTime = historyCreatedEpochTime;
+    }
 }
