@@ -1,22 +1,15 @@
 package com.oms.projectbuddy.services.impl;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.oms.projectbuddy.dto.GlobalBussinessGraphData;
-import com.oms.projectbuddy.dto.PBcertificateScorePercentage;
 import com.oms.projectbuddy.model.BCertificatePercentage;
 import com.oms.projectbuddy.model.ProviderBCertificateData;
 import com.oms.projectbuddy.repository.ProviderBCertificateDataRepository;
 import com.oms.projectbuddy.services.IBCertificateService;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
-@Service
+import java.util.Date;
+
+@Singleton
 public class BCertificationService implements IBCertificateService {
     @Inject
     private ProjectCreationService projectCreationService;

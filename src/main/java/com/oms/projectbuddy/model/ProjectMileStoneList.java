@@ -1,19 +1,16 @@
 package com.oms.projectbuddy.model;
 
-import com.oms.projectbuddy.dto.ProjectMilestoneListResponse;
-import com.oms.projectbuddy.utils.StatusEnum;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.oms.projectbuddy.dto.ProjectMilestoneListResponse;
+import com.oms.projectbuddy.utils.StatusEnum;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
@@ -38,7 +35,7 @@ public class ProjectMileStoneList {
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@Column(name = "date")
-	@ApiModelProperty(value = "Date in yyyy-MM-dd format")
+	//@ApiModelProperty(value = "Date in yyyy-MM-dd format")
 	private LocalDate date;
 
 	@JsonFormat(pattern = "yyyy-MM-dd")

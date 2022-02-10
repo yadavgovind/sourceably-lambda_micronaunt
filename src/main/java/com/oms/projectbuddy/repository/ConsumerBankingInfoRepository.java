@@ -1,9 +1,8 @@
 package com.oms.projectbuddy.repository;
 
 import com.oms.projectbuddy.model.ConsumerBankingInformation;
-import org.springframework.data.repository.CrudRepository;
 import io.micronaut.data.annotation.Repository;
-
+import io.micronaut.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;

@@ -1,18 +1,14 @@
 package com.oms.projectbuddy.services.impl;
 
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import io.micronaut.caffeine.cache.LoadingCache;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.stereotype.Service;
+import java.util.Random;
 
 
-@Service
+@Singleton
 public class OtpService {
 	private static final Logger LOG = LoggerFactory.getLogger(OtpService.class);
 	private static final Integer EXPIRE_MINS = 5;
@@ -22,18 +18,18 @@ public class OtpService {
 
 	public OtpService() {
 		super();
-		otpCache = CacheBuilder.newBuilder().
-				expireAfterWrite(EXPIRE_MINS, TimeUnit.MINUTES).build(new CacheLoader<String, Integer>() {
-			public Integer load(String key) {
-				return 0;
-			}
-		});
-		otpCacheForGotPassword= CacheBuilder.newBuilder().
-				expireAfterWrite(EXPIRE_MINS_FORGOTPASSWORD, TimeUnit.MINUTES).build(new CacheLoader<String, Integer>() {
-			public Integer load(String key) {
-				return 0;
-			}
-		});
+//		otpCache = CacheBuilder.newBuilder().
+//				expireAfterWrite(EXPIRE_MINS, TimeUnit.MINUTES).build(new CacheLoader<String, Integer>() {
+//			public Integer load(String key) {
+//				return 0;
+//			}
+//		});
+//		otpCacheForGotPassword= CacheBuilder.newBuilder().
+//				expireAfterWrite(EXPIRE_MINS_FORGOTPASSWORD, TimeUnit.MINUTES).build(new CacheLoader<String, Integer>() {
+//			public Integer load(String key) {
+//				return 0;
+//			}
+//		});
 
 	}
 	//This method is used to push the otp number against Key. Rewrite the OTP if it exists

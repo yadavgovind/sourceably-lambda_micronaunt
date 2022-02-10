@@ -1,11 +1,11 @@
 package com.oms.projectbuddy.utility;
 
+import jakarta.inject.Singleton;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.stereotype.Component;
-
-@Component
+@Singleton
 public class RegexUtil {
 	public boolean isInputSatisfyRegex(CharSequence input, String regex) {
 		final Pattern pattern = Pattern.compile(regex);

@@ -1,20 +1,14 @@
 package com.oms.projectbuddy.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.micronaut.http.HttpStatus;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ResponseStatus(value = HttpStatus.INSUFFICIENT_STORAGE)
+//@ResponseStatus(value = HttpStatus.INSUFFICIENT_STORAGE)
 public class FileStorageException extends RuntimeException {
 	
 	/**

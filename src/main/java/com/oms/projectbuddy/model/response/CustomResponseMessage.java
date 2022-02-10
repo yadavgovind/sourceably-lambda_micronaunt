@@ -1,7 +1,6 @@
 package com.oms.projectbuddy.model.response;
 
-import org.springframework.http.HttpStatus;
-
+import io.micronaut.http.HttpStatus;
 import lombok.Getter;
 import lombok.Setter;
 

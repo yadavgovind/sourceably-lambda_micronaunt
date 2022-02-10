@@ -4,9 +4,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
-import org.springframework.stereotype.Component;
+import jakarta.inject.Singleton;
 
-@Component
+@Singleton
 public class DateTimeUtil {
 
 	public LocalDate getTodayDate() {

@@ -1,10 +1,10 @@
 package com.oms.projectbuddy.utility;
 
-import org.springframework.stereotype.Component;
+import jakarta.inject.Singleton;
 
 import java.time.LocalDate;
 
-@Component
+@Singleton
 public class EmailTemplates {
 
     public String projectCreationTemplate(String projectName,String projectNumber,String contactName,String contactEmail,String contactNumber){

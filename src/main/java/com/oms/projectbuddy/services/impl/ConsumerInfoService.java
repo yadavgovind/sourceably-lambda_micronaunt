@@ -5,20 +5,17 @@ import com.oms.projectbuddy.model.*;
 import com.oms.projectbuddy.model.request.*;
 import com.oms.projectbuddy.model.response.BusinessBasicInfoResponse;
 import com.oms.projectbuddy.repository.*;
-import com.oms.projectbuddy.services.ICompanyInfoService;
 import com.oms.projectbuddy.services.IConsumerInfoService;
-import com.oms.projectbuddy.utility.FileOperation;
-import com.oms.projectbuddy.utility.SmsEmailIntegration;
+import io.micronaut.http.HttpStatus;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
 
 import java.time.Instant;
+import java.util.Collections;
 
-@Service
+@Singleton
 public class ConsumerInfoService implements IConsumerInfoService {
     @Inject
     private CompanyRepository registrationRepository;
@@ -427,7 +424,7 @@ public class ConsumerInfoService implements IConsumerInfoService {
     public ConsumerSales getConsumerSales(String userId) throws Exception {
         try {
             ConsumerSales consumerSales= consumerSalesRepository.findByUserId(userId);
-            consumerSales.setAdditionalAttachments((additionalAttachmentRepository.findBySalesIdAndUserId(consumerSales.getId(),userId)));
+            consumerSales.setAdditionalAttachments((Collections.emptyList()/*additionalAttachmentRepository.findBySalesIdAndUserId(consumerSales.getId(),userId)*/));
             return consumerSales;
         } catch (Exception e) {
             throw new Exception("user not found"+e.getMessage());

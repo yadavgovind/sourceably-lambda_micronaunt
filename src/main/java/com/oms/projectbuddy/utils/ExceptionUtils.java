@@ -2,10 +2,11 @@ package com.oms.projectbuddy.utils;
 
 import java.util.Collection;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.util.CollectionUtils;
+import io.micronaut.core.util.CollectionUtils;
+
 
 import com.oms.projectbuddy.exception.SourceablyCustomeException;
+import io.micronaut.http.HttpStatus;
 
 public class ExceptionUtils {
 	

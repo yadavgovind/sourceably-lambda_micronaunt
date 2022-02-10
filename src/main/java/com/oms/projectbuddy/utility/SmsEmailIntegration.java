@@ -1,37 +1,27 @@
 package com.oms.projectbuddy.utility;
 
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
 
-import javax.mail.internet.MimeMessage;
 import java.net.URLEncoder;
 
 
-@Component
+@Singleton
 public class SmsEmailIntegration {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmsEmailIntegration.class);
 
-    @Inject
-    private JavaMailSender mailSender;
+//    @Inject
+//    private JavaMailSender mailSender;
+//
+////@Inject
+////private SpringTemplateEngine templateEngine;
+//
+//    @Inject
+//    private RestTemplate restTemplate;
 
-//@Inject
-//private SpringTemplateEngine templateEngine;
 
-    @Inject
-    private RestTemplate restTemplate;
-
-
-    @Value("${spring.mail.from}")
-    private String from;
 
     public void sendEmail(String to, String subject, String message) {
 
@@ -46,18 +36,18 @@ public class SmsEmailIntegration {
             mailSender.send(mailMessage);
 
              */
-            if (StringUtils.isEmpty(to)) {
-                LOG.info("Email cant be send because to email is null");
-                return;
-            }
-            MimeMessage messages = mailSender.createMimeMessage();
-            MimeMessageHelper helper;
-            helper = new MimeMessageHelper(messages, true);//true indicates multipart message
-            helper.setFrom(from != null ? from : "support@sourceably.com"); // <--- THIS IS IMPORTANT
-            helper.setSubject(subject);
-            helper.setTo(to);
-            helper.setText(message, true);//true indicates body is html
-            mailSender.send(messages);
+//            if (StringUtils.isEmpty(to)) {
+//                LOG.info("Email cant be send because to email is null");
+//                return;
+//            }
+//            MimeMessage messages = mailSender.createMimeMessage();
+//            MimeMessageHelper helper;
+//            helper = new MimeMessageHelper(messages, true);//true indicates multipart message
+//            helper.setFrom(from != null ? from : "support@sourceably.com"); // <--- THIS IS IMPORTANT
+//            helper.setSubject(subject);
+//            helper.setTo(to);
+//            helper.setText(message, true);//true indicates body is html
+//            mailSender.send(messages);
             LOG.info("Mail send successfully from api" + to + "By ");
 
         } catch (Exception e) {
@@ -69,13 +59,13 @@ public class SmsEmailIntegration {
 
     public void sendVerificationEmail(String to, String subject, String message) {
         try {
-            MimeMessage mime = mailSender.createMimeMessage();
-            MimeMessageHelper mail = new MimeMessageHelper(mime);
-            mail.setTo(to);
-            mail.setSubject(subject);
-            mail.setText(message, true);
-            mail.setFrom(from);
-            mailSender.send(mime);
+//            MimeMessage mime = mailSender.createMimeMessage();
+//            MimeMessageHelper mail = new MimeMessageHelper(mime);
+//            mail.setTo(to);
+//            mail.setSubject(subject);
+//            mail.setText(message, true);
+//            mail.setFrom(from);
+//            mailSender.send(mime);
         } catch (Exception e) {
             LOG.info("In Email Cant Send The Email To " + to + "By " + e.getMessage());
         }
@@ -88,8 +78,8 @@ public class SmsEmailIntegration {
             //  String url = "http://sms-cp.otptech.in/api2/send/?apikey=Y2U4MTBhMTg5MGMxYWRkMGM3ZjUyMWI4NTczNDY3MDg=&numbers="+email+"&sender=OMSTXN&message="+ URLEncoder.encode(message);
             // String url ="http://sms-cp.otptech.in/api2/send/?apikey=Y2U4MTBhMTg5MGMxYWRkMGM3ZjUyMWI4NTczNDY3MDg=&numbers=91".$mobile."&sender=OMSTXN&message=".urlencode($message);;
             LOG.info("In Sms Integration For User Mobile Number" + mobileNumber);
-            String result = restTemplate.getForObject(url, String.class);
-            LOG.info("Response Of Sms Api " + result);
+          //  String result = restTemplate.getForObject(url, String.class);
+          //  LOG.info("Response Of Sms Api " + result);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,8 +94,8 @@ public class SmsEmailIntegration {
             //  String url = "http://sms-cp.otptech.in/api2/send/?apikey=Y2U4MTBhMTg5MGMxYWRkMGM3ZjUyMWI4NTczNDY3MDg=&numbers="+email+"&sender=OMSTXN&message="+ URLEncoder.encode(message);
             // String url ="http://sms-cp.otptech.in/api2/send/?apikey=Y2U4MTBhMTg5MGMxYWRkMGM3ZjUyMWI4NTczNDY3MDg=&numbers=91".$mobile."&sender=OMSTXN&message=".urlencode($message);;
             LOG.info("In Sms Integration For User Mobile Number" + mobileNumber);
-            String result = restTemplate.getForObject(url, String.class);
-            LOG.info("Response Of Sms Api " + result);
+           // String result = restTemplate.getForObject(url, String.class);
+          //  LOG.info("Response Of Sms Api " + result);
         } catch (Exception e) {
             e.printStackTrace();
 

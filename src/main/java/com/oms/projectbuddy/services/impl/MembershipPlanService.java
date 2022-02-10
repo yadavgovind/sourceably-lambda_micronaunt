@@ -11,21 +11,18 @@ import com.oms.projectbuddy.services.IMembershipPlanService;
 import com.oms.projectbuddy.utility.EmailTemplates;
 import com.oms.projectbuddy.utility.SmsEmailIntegration;
 import com.oms.projectbuddy.utils.ExceptionUtils;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+import io.micronaut.http.HttpStatus;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Service
+@Singleton
 public class MembershipPlanService implements IMembershipPlanService {
     @Inject
     private MembershipPlanDisplayRepository membershipPlanDisplayRepository;

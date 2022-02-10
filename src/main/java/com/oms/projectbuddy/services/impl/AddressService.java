@@ -1,11 +1,5 @@
 package com.oms.projectbuddy.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.oms.projectbuddy.model.City;
 import com.oms.projectbuddy.model.Country;
 import com.oms.projectbuddy.model.State;
@@ -13,8 +7,12 @@ import com.oms.projectbuddy.repository.CityRepository;
 import com.oms.projectbuddy.repository.CountryRepository;
 import com.oms.projectbuddy.repository.StateRepository;
 import com.oms.projectbuddy.services.IAddressService;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
-@Service
+import java.util.List;
+
+@Singleton
 public class AddressService implements IAddressService {
 	@Inject
 	private CountryRepository countryRepository;

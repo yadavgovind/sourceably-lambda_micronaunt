@@ -1,20 +1,15 @@
 package com.oms.projectbuddy.services;
 
-import com.oms.projectbuddy.model.request.CompanyLogoRequest;
-import com.oms.projectbuddy.model.request.ResetPassword;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-
 import com.oms.projectbuddy.model.CompanyRegistration;
 import com.oms.projectbuddy.model.request.ChangePassword;
+import com.oms.projectbuddy.model.request.CompanyLogoRequest;
 import com.oms.projectbuddy.model.request.CompanyRegistrationRequest;
+import com.oms.projectbuddy.model.request.ResetPassword;
 
 
 public interface ICompanyRegistrationService {
 	
-	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+	///UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 	
 	Object signUp(CompanyRegistrationRequest companyRequest) throws Exception;
 	
@@ -26,7 +21,7 @@ public interface ICompanyRegistrationService {
 
 	String logout(String token);
 
-    Authentication authenticate(String username, String password) throws Exception;
+  //  Authentication authenticate(String username, String password) throws Exception;
 	
 	Object changePassword(ChangePassword changePassword) throws Exception ;
 

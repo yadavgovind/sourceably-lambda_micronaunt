@@ -9,11 +9,12 @@ import com.oms.projectbuddy.utility.FileOperation;
 import com.oms.projectbuddy.utils.Constants;
 import com.oms.projectbuddy.utils.ExceptionUtils;
 
+import io.micronaut.http.HttpStatus;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
+
 
 import com.oms.projectbuddy.services.ICompanyInfoService;
 
@@ -22,7 +23,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Singleton
 public class CompanyInfoService implements ICompanyInfoService {
 	@Inject
 	private BusinessBasicInfoRepository basicInfoRepository;

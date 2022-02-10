@@ -1,10 +1,10 @@
 package com.oms.projectbuddy.utility;
 
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
+@Singleton
 public class FileOperation {
     private static final Logger LOG = LoggerFactory.getLogger(FileOperation.class);
 //    private final Path fileStorageLocation;
