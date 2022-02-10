@@ -2,9 +2,6 @@ package com.oms.projectbuddy.services;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.oms.projectbuddy.dto.CountryRevenueDto;
 import com.oms.projectbuddy.dto.DashBoardDto;
 import com.oms.projectbuddy.dto.GlobalBussinessGraphData;
@@ -19,6 +16,8 @@ import com.oms.projectbuddy.model.request.ProjectCreationRequest;
 import com.oms.projectbuddy.model.request.ProjectDocS3Request;
 import com.oms.projectbuddy.model.request.ProjectInviteListRequest;
 import com.oms.projectbuddy.model.request.ProviderNdaDocRequest;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
 
 public interface IProjectCreationService {
 

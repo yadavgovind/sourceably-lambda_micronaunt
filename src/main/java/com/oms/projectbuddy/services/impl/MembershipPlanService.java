@@ -27,12 +27,12 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class MembershipPlanService implements IMembershipPlanService {
-    @Autowired
+    @Inject
     private MembershipPlanDisplayRepository membershipPlanDisplayRepository;
-    @Autowired
+    @Inject
     private MembershipPlanSelectionRepository membershipPlanSelectionRepository;
 
-    @Autowired
+    @Inject
     private SmsEmailIntegration smsEmailIntegration;
 
     @Override

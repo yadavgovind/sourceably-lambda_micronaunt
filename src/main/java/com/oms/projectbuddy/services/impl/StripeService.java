@@ -6,11 +6,11 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Charge;
 import com.stripe.param.ChargeCreateParams;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import io.micronaut.context.annotation.Value;
+import jakarta.inject.Singleton;
 
 
-@Service
+@Singleton
 public class StripeService implements IStripeService {
 
     @Value("${stripe.api.key}")

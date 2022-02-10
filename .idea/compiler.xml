@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Annotation profile for sourceably-backend" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -55,6 +56,7 @@
           <entry name="$MAVEN_REPOSITORY$/io/micronaut/data/micronaut-data-tx/3.1.1/micronaut-data-tx-3.1.1.jar" />
           <entry name="$MAVEN_REPOSITORY$/jakarta/transaction/jakarta.transaction-api/1.3.3/jakarta.transaction-api-1.3.3.jar" />
         </processorPath>
+        <module name="sourceably-lambda_micronaunt" />
         <module name="sourceably-backend" />
       </profile>
     </annotationProcessing>
@@ -62,6 +64,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="sourceably-backend" options="-Amicronaut.processing.group=org.knf.dev.demo -Amicronaut.processing.module=micronaut-data-jpa-crud" />
+      <module name="sourceably-lambda_micronaunt" options="-Amicronaut.processing.group=org.knf.dev.demo -Amicronaut.processing.module=micronaut-data-jpa-crud" />
     </option>
   </component>
 </project>

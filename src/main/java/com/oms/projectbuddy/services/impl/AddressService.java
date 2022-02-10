@@ -16,11 +16,11 @@ import com.oms.projectbuddy.services.IAddressService;
 
 @Service
 public class AddressService implements IAddressService {
-	@Autowired
+	@Inject
 	private CountryRepository countryRepository;
-	@Autowired
+	@Inject
 	private StateRepository stateRepository;
-	@Autowired
+	@Inject
 	private CityRepository cityRepository;
 
 	@Override

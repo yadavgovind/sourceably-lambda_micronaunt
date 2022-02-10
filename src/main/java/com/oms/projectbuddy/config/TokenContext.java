@@ -14,7 +14,7 @@
 //@Component
 //@AllArgsConstructor
 //public class TokenContext {
-//    @Autowired
+//    @Inject
 //    private TokenProvider tokenParser;
 //
 //    public String token() {

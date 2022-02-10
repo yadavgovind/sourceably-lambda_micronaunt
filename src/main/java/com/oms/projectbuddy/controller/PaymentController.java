@@ -6,32 +6,35 @@ import com.oms.projectbuddy.model.response.CustomResponseMessage;
 import com.oms.projectbuddy.model.response.EntityResponse;
 import com.oms.projectbuddy.services.IPaypalService;
 import com.oms.projectbuddy.services.IStripeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+import jakarta.inject.Inject;
+
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/api")
 public class PaymentController {
     
-    @Autowired
+    @Inject
     IStripeService stripeService;
 
-    @Autowired
+    @Inject
     IPaypalService paypalService;
 
-    @PostMapping("/verifyCard")
-    public ResponseEntity<?> verifyCard(@RequestBody StripePaymentData token) {
+    @Post("/verifyCard")
+    public Object verifyCard(@Body StripePaymentData token) {
         try {
-            return new ResponseEntity<>(new EntityResponse(stripeService.verifyCard(token),0), HttpStatus.OK);
+            return new EntityResponse(stripeService.verifyCard(token),0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PostMapping("/createPaypalSubscription")
-    public ResponseEntity<?> createPaypalSubscription(@RequestBody PaypalPaymentData paypalPaymentData) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(paypalService.createPaymentPlanAndSubscription(paypalPaymentData),0), HttpStatus.OK);
+    @Post("/createPaypalSubscription")
+    public Object createPaypalSubscription(@Body PaypalPaymentData paypalPaymentData) throws Exception {
+    	return new EntityResponse(paypalService.createPaymentPlanAndSubscription(paypalPaymentData),0);
     }
 }

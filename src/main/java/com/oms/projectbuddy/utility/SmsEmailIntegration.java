@@ -20,13 +20,13 @@ public class SmsEmailIntegration {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmsEmailIntegration.class);
 
-    @Autowired
+    @Inject
     private JavaMailSender mailSender;
 
-//@Autowired
+//@Inject
 //private SpringTemplateEngine templateEngine;
 
-    @Autowired
+    @Inject
     private RestTemplate restTemplate;
 
 

@@ -1,10 +1,13 @@
 package com.oms.projectbuddy.controller;
 
-import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+
+import jakarta.inject.Inject;
+
 
 import com.oms.projectbuddy.model.request.ProjectBidDocumentHistoryRequest;
 import com.oms.projectbuddy.model.request.SoftwareEvaluationRequest;
@@ -13,38 +16,34 @@ import com.oms.projectbuddy.services.IProjectBidService;
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/api")
-@Api(value = "ProjectBidDocument Controller", description = "Project document History Controller ", tags = {"Project document History Controller"})
+//@Api(value = "ProjectBidDocument Controller", description = "Project document History Controller ", tags = {"Project document History Controller"})
 public class ProjectBidDocumentController {
 
-	@Autowired
+	@Inject
 	private IProjectBidService iProjectBidService;
 
-	@PostMapping(value = "/supplierDocumentsHistory")
-	public ResponseEntity<?> registration(@RequestBody ProjectBidDocumentHistoryRequest request) throws Exception{
-		return new ResponseEntity<>(new EntityResponse(iProjectBidService.saveDocumentHistory(request), 0),
-				HttpStatus.OK);
+	@Post(value = "/supplierDocumentsHistory")
+	public Object registration(@Body ProjectBidDocumentHistoryRequest request) throws Exception{
+		return new EntityResponse(iProjectBidService.saveDocumentHistory(request), 0);
 	}
 
-	@GetMapping("/supplierDocumentsHistory")
-	public ResponseEntity<?> getAllMarketData(@RequestParam(name = "projectId") String projectId,@RequestParam(name = "supplierId") String supplierId,
-											  @RequestParam(name = "consumerId") String consumerId) throws Exception{
-		return new ResponseEntity<>(
-				new EntityResponse(iProjectBidService.getSupplierProjectsHistoryByProjectId(projectId,supplierId,consumerId), 0),
-				HttpStatus.OK);
+	@Get("/supplierDocumentsHistory")
+	public Object getAllMarketData(  String projectId,  String supplierId,
+											  String consumerId) throws Exception{
+		return
+				new EntityResponse(iProjectBidService.getSupplierProjectsHistoryByProjectId(projectId,supplierId,consumerId), 0);
 	}
 
 
-	@PostMapping(value = "/softwareEvaluation")
-	public ResponseEntity<?> saveSoftwareEvaluation(@RequestBody SoftwareEvaluationRequest request) throws Exception{
-		return new ResponseEntity<>(new EntityResponse(iProjectBidService.saveUpdateSoftwareEvaluation(request), 0),
-				HttpStatus.OK);
+	@Post(value = "/softwareEvaluation")
+	public Object saveSoftwareEvaluation(@Body SoftwareEvaluationRequest request) throws Exception{
+		return new EntityResponse(iProjectBidService.saveUpdateSoftwareEvaluation(request), 0);
 	}
 
-	@GetMapping("/softwareEvaluation")
-	public ResponseEntity<?> getAllMarketData(@RequestParam(name = "supplierId") String supplierId) throws Exception{
-		return new ResponseEntity<>(
-				new EntityResponse(iProjectBidService.getSoftwareEvaluationBySupplierId(supplierId), 0),
-				HttpStatus.OK);
+	@Get("/softwareEvaluation")
+	public Object getAllMarketData( String supplierId) throws Exception{
+		return
+				new EntityResponse(iProjectBidService.getSoftwareEvaluationBySupplierId(supplierId), 0);
 	}
 
 }

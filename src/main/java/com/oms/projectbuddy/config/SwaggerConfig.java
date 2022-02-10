@@ -97,7 +97,7 @@ package com.oms.projectbuddy.config;//package com.oms.projectbuddy.config;
 //
 //        private final ResolvedType pageableType;
 //
-//        @Autowired
+//        @Inject
 //        public OperationPageableParameterReader(TypeNameExtractor nameExtractor, TypeResolver resolver) {
 //
 //            this.nameExtractor = nameExtractor;

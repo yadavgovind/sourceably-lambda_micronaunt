@@ -3,15 +3,14 @@ package com.oms.projectbuddy.repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import io.micronaut.data.model.Page;
 import io.micronaut.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import io.micronaut.data.annotation.Query;
 
 import com.oms.projectbuddy.model.ProjectCreation;
 import com.oms.projectbuddy.utils.ProjectStatus;
-import org.springframework.data.repository.query.Param;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.http.annotation.Part;
 
 public interface ProjectCreationRepository extends JpaRepository<ProjectCreation,Long> {
 
@@ -85,11 +84,11 @@ public interface ProjectCreationRepository extends JpaRepository<ProjectCreation
 
     List<ProjectCreation> findByProjectStatusAndCompanyId(ProjectStatus projectStatus, String companyId);
 
-    @Modifying
+//    @Modifying
     @Query(nativeQuery = true,value = " update sbly_consumer_project_creation set  project_status =:projectStatus where project_code=:projectCode ")
-    public void updateProjectStatus(@Param("projectCode") String projectCode, @Param("projectStatus") String projectStatus);
-    @Modifying
+    public void updateProjectStatus(@Part("projectCode") String projectCode, @Part("projectStatus") String projectStatus);
+//    @Modifying
     @Query(nativeQuery = true,value = " update sbly_consumer_project_creation set  is_marketplace =:market where project_code=:projectCode ")
-    public void updateMarket(@Param("projectCode") String projectCode, @Param("market") Boolean market);
+    public void updateMarket(@Part("projectCode") String projectCode, @Part("market") Boolean market);
 
 }

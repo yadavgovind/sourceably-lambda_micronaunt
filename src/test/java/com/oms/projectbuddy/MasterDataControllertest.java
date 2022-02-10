@@ -37,7 +37,7 @@ public class MasterDataControllertest {
 //        country.setId(1l);
 //        country.setCountryName("INDIA");
 //        Mockito.when(iAddressService.getAllCountry()).thenReturn(Arrays.asList(country));
-//        ResponseEntity<?> allCountry = masterDataController.getAllCountry();
+//        Object allCountry = masterDataController.getAllCountry();
 //        assert(Objects.nonNull(allCountry.getBody()));
 //    }
 
@@ -47,13 +47,13 @@ public class MasterDataControllertest {
         country.setId(1l);
         country.setCountryName("INDIA");
         Mockito.doThrow(Exception.class).when(masterDataController.getAllCountry());
-      ResponseEntity<?> allCountry = masterDataController.getAllCountry();
+      Object allCountry = masterDataController.getAllCountry();
 
     }
     @Test(expected = Exception.class)
     public void testFindStateNegative() throws Exception {
         Mockito.doThrow(Exception.class).when(masterDataController.getCountryByRegion(anyString()));
-       ResponseEntity<?> allCountry = masterDataController.getCountryByRegion(anyString());
+       Object allCountry = masterDataController.getCountryByRegion(anyString());
 
     }
     @Test(expected = Exception.class)
@@ -72,7 +72,7 @@ public class MasterDataControllertest {
 
             Country country = new Country();
 
-            ResponseEntity<?> actualValue=masterDataController.getCountryByRegion( anyString());
+            Object actualValue=masterDataController.getCountryByRegion( anyString());
            Assert.assertNotNull(actualValue.getBody());
 
         } catch (Exception exception) {

@@ -1,9 +1,9 @@
 package com.oms.projectbuddy.repository;
 
 import com.oms.projectbuddy.model.SkillMatrixCategory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import io.micronaut.data.model.Page;
 import io.micronaut.data.jpa.repository.JpaRepository;
+import io.micronaut.data.model.Pageable;
 
 import java.util.List;
 

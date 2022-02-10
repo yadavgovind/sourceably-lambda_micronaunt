@@ -1,125 +1,126 @@
 package com.oms.projectbuddy.controller;
 
 import com.oms.projectbuddy.model.request.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.annotation.*;
 
 import com.oms.projectbuddy.model.request.BusinessBasicInfoRequest;
 import com.oms.projectbuddy.model.response.CustomResponseMessage;
 import com.oms.projectbuddy.model.response.EntityResponse;
 import com.oms.projectbuddy.services.ICompanyInfoService;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+import jakarta.inject.Inject;
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/api/company")
 public class CompanyInfoController {
-    @Autowired
+    @Inject
     private ICompanyInfoService iCompanyInfoService;
 
-    @GetMapping("/getBasicInfoByUserId")
-    public ResponseEntity<?> getCompanyBasicInfo(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iCompanyInfoService.getInfoByUserId(userId), 0), HttpStatus.OK);
+    @Get("/getBasicInfoByUserId")
+    public  Object getCompanyBasicInfo( String userId) throws Exception {
+    	return new EntityResponse(iCompanyInfoService.getInfoByUserId(userId), 0);
     }
 
-    @PostMapping("/saveCompanyBasicInfo")
-    public ResponseEntity<?> saveCompanyBasicInfo(@RequestBody BusinessBasicInfoRequest basicInfoRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.saveBasicInfo(basicInfoRequest), 0), HttpStatus.OK);
+    @Post("/saveCompanyBasicInfo")
+    public Object saveCompanyBasicInfo(@Body BusinessBasicInfoRequest basicInfoRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.saveBasicInfo(basicInfoRequest), 0);
     }
 
-    @PutMapping("/updateCompanyBasicInfo")
-    public ResponseEntity<?> updateCompanyBasicInfo(@RequestBody BusinessBasicInfoRequest basicInfoRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.updateBasicInfo(basicInfoRequest), 0), HttpStatus.OK);
+    @Put("/updateCompanyBasicInfo")
+    public Object updateCompanyBasicInfo(@Body BusinessBasicInfoRequest basicInfoRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.updateBasicInfo(basicInfoRequest), 0);
     }
 
-    @PutMapping("/removeCompanyVideo")
-    public ResponseEntity<?> removeCompany(@RequestParam String userId) {
+    @Put("/removeCompanyVideo")
+    public Object removeCompany( String userId) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.removeCompanyVideo(userId), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iCompanyInfoService.removeCompanyVideo(userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
 
     }
 
-    @GetMapping("/getBankInfoByUserId")
-    public ResponseEntity<?> getBankingInfo(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iCompanyInfoService.getBankingInformation(userId), 0), HttpStatus.OK);
+    @Get("/getBankInfoByUserId")
+    public Object getBankingInfo( String userId) throws Exception {
+    	return new EntityResponse(iCompanyInfoService.getBankingInformation(userId), 0);
     }
 
-    @PostMapping("/saveBankingInfo")
-    public ResponseEntity<?> saveBankingInfo(@RequestBody BankingInformationRequest bankingRequest, @RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.saveBankingInformation(bankingRequest, userId), 0), HttpStatus.OK);
+    @Post("/saveBankingInfo")
+    public Object saveBankingInfo(@Body BankingInformationRequest bankingRequest,  String userId) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.saveBankingInformation(bankingRequest, userId), 0);
     }
 
-    @PutMapping("/updateBankingInfo")
-    public ResponseEntity<?> updateBankingInfo(@RequestBody BankingInformationRequest bankingRequest, @RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.updateBankingInformation(bankingRequest, userId), 0), HttpStatus.OK);
+    @Put("/updateBankingInfo")
+    public Object updateBankingInfo(@Body BankingInformationRequest bankingRequest,  String userId) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.updateBankingInformation(bankingRequest, userId), 0);
 
     }
 
-    @PostMapping("/saveCompanyOverview")
-    public ResponseEntity<?> saveCompanyDetails(@RequestBody CompanyDetailsRequest detailsRequestRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.saveCompanyDetails(detailsRequestRequest), 0), HttpStatus.OK);
+    @Post("/saveCompanyOverview")
+    public Object saveCompanyDetails(@Body CompanyDetailsRequest detailsRequestRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.saveCompanyDetails(detailsRequestRequest), 0);
     }
 
-    @PutMapping("/updateCompanyOverview")
-    public ResponseEntity<?> updateCompanyDetails(@RequestBody CompanyDetailsRequest detailsRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.updateCompanyDetails(detailsRequest), 0), HttpStatus.OK);
+    @Put("/updateCompanyOverview")
+    public Object updateCompanyDetails(@Body CompanyDetailsRequest detailsRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.updateCompanyDetails(detailsRequest), 0);
     }
 
-    @GetMapping("/getCompanyOverviewByUserId")
-    public ResponseEntity<?> getCompanyDetails(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iCompanyInfoService.getCompanyDetails(userId), 0), HttpStatus.OK);
+    @Get("/getCompanyOverviewByUserId")
+    public Object getCompanyDetails( String userId) throws Exception {
+    	return new EntityResponse(iCompanyInfoService.getCompanyDetails(userId), 0);
     }
 
-    @PostMapping("/saveCompanyHighlights")
-    public ResponseEntity<?> saveCompanyHighlights(@RequestBody CompanyHighlightsRequest highlightsRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.saveCompanyHighlights(highlightsRequest), 0), HttpStatus.OK);
+    @Post("/saveCompanyHighlights")
+    public Object saveCompanyHighlights(@Body CompanyHighlightsRequest highlightsRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.saveCompanyHighlights(highlightsRequest), 0);
     }
 
-    @GetMapping("/getCompanyHighlightsByUserId")
-    public ResponseEntity<?> getCompanyHighlights(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iCompanyInfoService.getCompanyHighlights(userId), 0), HttpStatus.OK);
+    @Get("/getCompanyHighlightsByUserId")
+    public Object getCompanyHighlights( String userId) throws Exception {
+    	return new EntityResponse(iCompanyInfoService.getCompanyHighlights(userId), 0);
     }
 
-    @PutMapping("/updateCompanyHighlights")
-    public ResponseEntity<?> updateCompanyHighlights(@RequestBody CompanyHighlightsRequest highlightsRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.updateCompanyHighlights(highlightsRequest), 0), HttpStatus.OK);
+    @Put("/updateCompanyHighlights")
+    public Object updateCompanyHighlights(@Body CompanyHighlightsRequest highlightsRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.updateCompanyHighlights(highlightsRequest), 0);
     }
 
-    @PostMapping("/saveCompanyFinancials")
-    public ResponseEntity<?> saveCompanyFinancials(@RequestBody CompanyFinancialsRequest financialsRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.saveCompanyFinancials(financialsRequest), 0), HttpStatus.OK);
+    @Post("/saveCompanyFinancials")
+    public Object saveCompanyFinancials(@Body CompanyFinancialsRequest financialsRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.saveCompanyFinancials(financialsRequest), 0);
     }
 
-    @GetMapping("/getCompanyFinancialByUserId")
-    public ResponseEntity<?> getCompanyFinancials(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iCompanyInfoService.getCompanyFinancials(userId), 0), HttpStatus.OK);
+    @Get("/getCompanyFinancialByUserId")
+    public Object getCompanyFinancials( String userId) throws Exception {
+    	return new EntityResponse(iCompanyInfoService.getCompanyFinancials(userId), 0);
     }
 
-    @PutMapping("/updateCompanyFinancial")
-    public ResponseEntity<?> updateCompanyFinancial(@RequestBody CompanyFinancialsRequest financialsRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.updateCompanyfinancials(financialsRequest), 0), HttpStatus.OK);
+    @Put("/updateCompanyFinancial")
+    public Object updateCompanyFinancial(@Body CompanyFinancialsRequest financialsRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.updateCompanyfinancials(financialsRequest), 0);
     }
 
-    @PostMapping("/saveCompanySales")
-    public ResponseEntity<?> saveCompanySales(@RequestBody CompanySalesRequest salesRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.saveCompanySales(salesRequest), 0), HttpStatus.OK);
+    @Post("/saveCompanySales")
+    public Object saveCompanySales(@Body CompanySalesRequest salesRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.saveCompanySales(salesRequest), 0);
     }
 
-    @GetMapping("/getCompanySalesByUserId")
-    public ResponseEntity<?> getCompanySales(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iCompanyInfoService.getCompanySales(userId), 0), HttpStatus.OK);
+    @Get("/getCompanySalesByUserId")
+    public Object getCompanySales( String userId) throws Exception {
+    	return new EntityResponse(iCompanyInfoService.getCompanySales(userId), 0);
     }
 
-    @PutMapping("/updateCompanySales")
-    public ResponseEntity<?> updateCompanySales(@RequestBody CompanySalesRequest salesRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.updateCompanySales(salesRequest), 0), HttpStatus.OK);
+    @Put("/updateCompanySales")
+    public Object updateCompanySales(@Body CompanySalesRequest salesRequest) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.updateCompanySales(salesRequest), 0);
     }
 
-    @DeleteMapping("/deleteFiles")
-    public ResponseEntity<?> deleFiles(@RequestParam String userId, @RequestParam Long id, @RequestParam String type) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iCompanyInfoService.deletedUploadedFiles(userId, id, type), 0), HttpStatus.OK);
+    @Delete("/deleteFiles")
+    public Object deleFiles( String userId,  Long id,  String type) throws Exception {
+    	return new CustomResponseMessage(iCompanyInfoService.deletedUploadedFiles(userId, id, type), 0);
     }
 }

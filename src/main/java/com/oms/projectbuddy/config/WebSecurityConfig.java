@@ -27,7 +27,7 @@
 //    private UserDetailsService userDetailsService;
 //
 //
-//    @Autowired
+//    @Inject
 //    private JwtAuthenticationEntryPoint unauthorizedHandler;
 //
 //    @Override
@@ -36,7 +36,7 @@
 //        return super.authenticationManagerBean();
 //    }
 //
-//    @Autowired
+//    @Inject
 //    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(userDetailsService)
 //                .passwordEncoder(encoder());

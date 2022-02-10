@@ -1,6 +1,5 @@
 package com.oms.projectbuddy.services.impl;
 
-import com.oms.projectbuddy.controller.SkillMatrixController;
 import com.oms.projectbuddy.exception.SourceablyCustomeException;
 import com.oms.projectbuddy.model.CompanyRegistration;
 import com.oms.projectbuddy.model.SkillMatrixCategory;
@@ -15,108 +14,108 @@ import com.oms.projectbuddy.repository.SupplierSkillMatrixRepository;
 import com.oms.projectbuddy.services.ISkillMatrixService;
 import com.oms.projectbuddy.utils.ExceptionUtils;
 
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.http.HttpStatus;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 
 
 import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 
-@Service
+@Singleton
 public class SkillMatrixService implements ISkillMatrixService {
     private static final Logger LOG = LoggerFactory.getLogger(SkillMatrixService.class);
 
-    @Autowired
+    @Inject
     private SkillMatrixCategoryRepository skillMatrixCategoryRepository;
 
-    @Autowired
+    @Inject
     private SupplierSkillMatrixRepository supplierSkillMatrixRepository;
 
-    @Autowired
+    @Inject
     private CompanyRepository companyRepository;
 
     @Override
-    public void bukUploadSkillMatrixCategory(MultipartFile file) throws IOException {
-        XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-        XSSFSheet worksheet = workbook.getSheetAt(0);
-        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-            if (index > 1010) {
-                XSSFRow row = worksheet.getRow(index);
-                try {
-                    DataFormatter dataFormatter = new DataFormatter();
-                    String level1 = "";
-                    String level2 = "";
-                    String level3 = "";
-                    String level4 = "";
-                    String level5 = "";
-                    String level6 = "";
-                    String level7 = "";
-
-                    String id = row.getCell(0).getRawValue();
-                    if (row.getCell(0) != null) {
-                        level1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(0))).orElse(null);
-                    }
-                    if (row.getCell(1) != null) {
-                        level2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(1))).orElse(null);
-                    }
-                    if (row.getCell(2) != null) {
-                        level3 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(2))).orElse(null);
-                    }
-                    if (row.getCell(3) != null) {
-                        level4 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(3))).orElse(null);
-                    }
-                    if (row.getCell(4) != null) {
-                        level5 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(4))).orElse(null);
-                    }
-                    if (row.getCell(5) != null) {
-                        level6 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(5))).orElse(null);
-                    }
-                    if (row.getCell(6) != null) {
-                        level7 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(6))).orElse(null);
-                    }
-                    if (!level1.equals("")) {
-                        saveSkillMatrix(level1, false, "", "LEVEL-1");
-                    }
-                    if (!level2.equals("")) {
-                        saveSkillMatrix(level2, true, level1, "LEVEL-2");
-                    }
-                    if (!level3.equals("")) {
-                        saveSkillMatrix(level3, true, level2, "LEVEL-3");
-                    }
-                    if (!level4.equals("")) {
-                        saveSkillMatrix(level4, true, level3, "LEVEL-4");
-                    }
-                    if (!level5.equals("")) {
-                        saveSkillMatrix(level5, true, level4, "LEVEL-5");
-                    }
-                    if (!level6.equals("")) {
-                        saveSkillMatrix(level6, true, level5, "LEVEL-6");
-                    }
-                    if (!level7.equals("")) {
-                        saveSkillMatrix(level7, true, level6, "LEVEL-7");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    public void bukUploadSkillMatrixCategory(String  file) throws IOException {
+//        XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+//        XSSFSheet worksheet = workbook.getSheetAt(0);
+//        for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+//            if (index > 1010) {
+//                XSSFRow row = worksheet.getRow(index);
+//                try {
+//                    DataFormatter dataFormatter = new DataFormatter();
+//                    String level1 = "";
+//                    String level2 = "";
+//                    String level3 = "";
+//                    String level4 = "";
+//                    String level5 = "";
+//                    String level6 = "";
+//                    String level7 = "";
+//
+//                    String id = row.getCell(0).getRawValue();
+//                    if (row.getCell(0) != null) {
+//                        level1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(0))).orElse(null);
+//                    }
+//                    if (row.getCell(1) != null) {
+//                        level2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(1))).orElse(null);
+//                    }
+//                    if (row.getCell(2) != null) {
+//                        level3 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(2))).orElse(null);
+//                    }
+//                    if (row.getCell(3) != null) {
+//                        level4 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(3))).orElse(null);
+//                    }
+//                    if (row.getCell(4) != null) {
+//                        level5 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(4))).orElse(null);
+//                    }
+//                    if (row.getCell(5) != null) {
+//                        level6 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(5))).orElse(null);
+//                    }
+//                    if (row.getCell(6) != null) {
+//                        level7 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(6))).orElse(null);
+//                    }
+//                    if (!level1.equals("")) {
+//                        saveSkillMatrix(level1, false, "", "LEVEL-1");
+//                    }
+//                    if (!level2.equals("")) {
+//                        saveSkillMatrix(level2, true, level1, "LEVEL-2");
+//                    }
+//                    if (!level3.equals("")) {
+//                        saveSkillMatrix(level3, true, level2, "LEVEL-3");
+//                    }
+//                    if (!level4.equals("")) {
+//                        saveSkillMatrix(level4, true, level3, "LEVEL-4");
+//                    }
+//                    if (!level5.equals("")) {
+//                        saveSkillMatrix(level5, true, level4, "LEVEL-5");
+//                    }
+//                    if (!level6.equals("")) {
+//                        saveSkillMatrix(level6, true, level5, "LEVEL-6");
+//                    }
+//                    if (!level7.equals("")) {
+//                        saveSkillMatrix(level7, true, level6, "LEVEL-7");
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 
     @Override
     public Object getParentCategoriesdetails(Pageable pageable) {
         Page<SkillMatrixCategory> skillMatrixCategories = skillMatrixCategoryRepository.findByIsSubCategory(false, pageable);
-        return new PageDto(skillMatrixCategories.getContent(), skillMatrixCategories.getTotalPages(), skillMatrixCategories.getTotalElements(), skillMatrixCategories.getNumber());
+        return new PageDto(skillMatrixCategories.getContent(), skillMatrixCategories.getTotalPages(), skillMatrixCategories.getNumberOfElements(), skillMatrixCategories.getPageNumber());
     }
 
     @Override
@@ -128,7 +127,7 @@ public class SkillMatrixService implements ISkillMatrixService {
         Page<SkillMatrixCategory> skillMatrixCategories = skillMatrixCategoryRepository.findByParentAndIsSubCategory(parent, true, pageable);
 
         LOG.info("Data Is Retrived Success for the parent id " + skillCategoryId + " and Level is " + parent.getLevel());
-        return new PageDto(skillMatrixCategories.getContent(), skillMatrixCategories.getTotalPages(), skillMatrixCategories.getTotalElements(), skillMatrixCategories.getNumber());
+        return new PageDto(skillMatrixCategories.getContent(), skillMatrixCategories.getTotalPages(), skillMatrixCategories.getNumberOfElements(), skillMatrixCategories.getPageNumber());
     }
 
     private List<SkillMatrixCategory> getChildSkillCategoryBySkillIdTwo(String skillCategoryId, Pageable pageable) throws Exception {

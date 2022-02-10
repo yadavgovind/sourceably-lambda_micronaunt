@@ -4,10 +4,11 @@ import com.oms.projectbuddy.services.ICertificationService;
 
 import java.time.LocalDate;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+import jakarta.inject.Inject;
+
 
 import com.oms.projectbuddy.dto.GlobalSearchFilter;
 import com.oms.projectbuddy.model.response.CustomResponseMessage;
@@ -18,75 +19,71 @@ import com.oms.projectbuddy.services.IProjectCreationService;
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/api")
 public class DashBoardController {
-	@Autowired
+	@Inject
 	private IProjectCreationService iProjectCreationService;
-	@Autowired
+	@Inject
 	private ICertificationService  iCertificationService;
 	
-	@GetMapping("/getProjectByOptionalProperty")
-	public ResponseEntity<?> getProjectByOptionalProperty( GlobalSearchFilter searchFilter) {
+	@Get("/getProjectByOptionalProperty")
+	public Object getProjectByOptionalProperty( GlobalSearchFilter searchFilter) {
 		try {
-			return new ResponseEntity<>(
-					new EntityResponse(iProjectCreationService.getProjectByOptionalProperty(searchFilter), 0),
-					HttpStatus.OK);
+			return
+					new EntityResponse(iProjectCreationService.getProjectByOptionalProperty(searchFilter), 0) ;
 		} catch (Exception e) {
-			return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new CustomResponseMessage(e.getMessage(), -1);
 		}
 	}
 
-	@GetMapping("/getAllProjectStatusByMonth")
-	public ResponseEntity<?> getAllProjectDetailsByDate(@RequestParam(name = "startDate")  String startDate, @RequestParam(name = "endDate")  String endDate) throws Exception {
-		return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getAllProjectCostByMonth(startDate,endDate), 0),
-				HttpStatus.OK);
+	@Get("/getAllProjectStatusByMonth")
+	public Object getAllProjectDetailsByDate( String startDate,   String endDate) throws Exception {
+		return new EntityResponse(iProjectCreationService.getAllProjectCostByMonth(startDate,endDate), 0);
 	}
 
 
-	@GetMapping("/marketData")
-	public  ResponseEntity<?> getAllMarketData(@RequestParam String startDate,@RequestParam String endDate) throws Exception{
-		return new ResponseEntity<>(new EntityResponse(iCertificationService.getGlobalScoreBasedOnSupplier(stringToLocalDate(startDate),stringToLocalDate(endDate)), 0),
-				HttpStatus.OK);
+	@Get("/marketData")
+	public  Object getAllMarketData( String startDate, String endDate) throws Exception{
+		return new EntityResponse(iCertificationService.getGlobalScoreBasedOnSupplier(stringToLocalDate(startDate),stringToLocalDate(endDate)), 0);
 	}
 	
 	/**
 	 * For Project Milestone and proposal Status graph.
 	 */
-	@GetMapping("/getInternalBudgetProposalStatus")
-	public ResponseEntity<?> getProjectByProjectStatus(@RequestParam String status,@RequestParam(name = "startDate")  String startDate, @RequestParam(name = "endDate")  String endDate) throws Exception {
-		return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getInternalBudgetProposalStatus(status,startDate,endDate), 0),
-				HttpStatus.OK);
+	@Get("/getInternalBudgetProposalStatus")
+	public Object getProjectByProjectStatus( String status,  String startDate,  String endDate) throws Exception {
+		return new EntityResponse(iProjectCreationService.getInternalBudgetProposalStatus(status,startDate,endDate), 0);
+
 	}
 	
-	@GetMapping("/getRevenuePerformance")
-	public ResponseEntity<?> getRevenuePerformance(@RequestParam(name = "startDate")  String startDate, @RequestParam(name = "endDate")  String endDate) throws Exception {
-		return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getRevenuePerformance(startDate,endDate), 0),
-				HttpStatus.OK);
+	@Get("/getRevenuePerformance")
+	public Object getRevenuePerformance(  String startDate,   String endDate) throws Exception {
+		return new EntityResponse(iProjectCreationService.getRevenuePerformance(startDate,endDate), 0);
+
 	}
 
 	//this
-	@GetMapping("/bcertificatePercentage/{supplierId}")
-	public ResponseEntity<?> bcertificatePercentage(@PathVariable("supplierId") String supplierId) throws Exception {
-		return new ResponseEntity<>(new EntityResponse(iProjectCreationService.bcertificatePercentage(supplierId), 0),
-				HttpStatus.OK);
+	@Get("/bcertificatePercentage/{supplierId}")
+	public Object bcertificatePercentage(@PathVariable("supplierId") String supplierId) throws Exception {
+		return new EntityResponse(iProjectCreationService.bcertificatePercentage(supplierId), 0);
+
 	}
 
-	@GetMapping("/globalCyberGraphData")
-	public ResponseEntity<?> globalCyberGraphData(@RequestParam(name = "startDate")  String startDate, @RequestParam(name = "endDate")  String endDate, @RequestParam String supplierId) {
+	@Get("/globalCyberGraphData")
+	public Object globalCyberGraphData(  String startDate,    String endDate,  String supplierId) {
 
 		try {
-			return new ResponseEntity<>(new EntityResponse(iCertificationService.globalCyberGraphData(stringToLocalDate(startDate),stringToLocalDate(endDate),"",supplierId), 0),
-					HttpStatus.OK);
+			return new EntityResponse(iCertificationService.globalCyberGraphData(stringToLocalDate(startDate),stringToLocalDate(endDate),"",supplierId), 0);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new CustomResponseMessage(e.getMessage(), -1);
 		}
 	}
 
-	@GetMapping("/globalBussinessGraphData")
-	public ResponseEntity<?> globalBussinessGraphData(@RequestParam(name = "startDate")  String startDate, @RequestParam(name = "endDate")  String endDate,
-													  @RequestParam(required = false) String supplierId) throws Exception {
+	@Get("/globalBussinessGraphData")
+	public Object globalBussinessGraphData(  String startDate,  String endDate,
+													   String supplierId) throws Exception {
 
-		return new ResponseEntity<>(new EntityResponse(iProjectCreationService.globalCyberGraphData(startDate,endDate,supplierId), 0),
-				HttpStatus.OK);
+		return new EntityResponse(iProjectCreationService.globalCyberGraphData(startDate,endDate,supplierId), 0);
+
 	}
 
 	private LocalDate stringToLocalDate(String date){

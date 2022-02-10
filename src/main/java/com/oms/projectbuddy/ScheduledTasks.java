@@ -15,7 +15,7 @@
 //
 //    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 //
-//    @Autowired
+//    @Inject
 //    private ISkillMatrixService iSkillMatrixService;
 //
 ////    //        @Scheduled(cron = "0 0/15 * * * *")

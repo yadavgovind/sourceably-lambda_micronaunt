@@ -18,10 +18,10 @@ import com.oms.projectbuddy.services.IBCertificateService;
 
 @Service
 public class BCertificationService implements IBCertificateService {
-    @Autowired
+    @Inject
     private ProjectCreationService projectCreationService;
 
-    @Autowired
+    @Inject
     private ProviderBCertificateDataRepository providerBCertificateDataRepository;
 
 

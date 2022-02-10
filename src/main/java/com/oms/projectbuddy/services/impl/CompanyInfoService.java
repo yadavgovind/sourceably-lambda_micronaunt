@@ -24,31 +24,31 @@ import java.util.List;
 
 @Service
 public class CompanyInfoService implements ICompanyInfoService {
-	@Autowired
+	@Inject
 	private BusinessBasicInfoRepository basicInfoRepository;
-	@Autowired
+	@Inject
 	private CompanyRepository registrationRepository;
-	@Autowired
+	@Inject
 	private BankingInfoRepository bankingInfoRepository;
-	@Autowired
+	@Inject
 	private CompanyDetailsRepository companyDetailsRepository;
-	@Autowired
+	@Inject
 	private CompanySalesRepository companySalesRepository;
-	@Autowired
+	@Inject
 	private ConsumerSalesRepository consumerSalesRepository;
-	@Autowired
+	@Inject
 	private CompanyHighlightsRepository companyHighlightsRepository;
-	@Autowired
+	@Inject
 	private CompanyFinancialsRepository companyFinancialsRepository;
-	@Autowired
+	@Inject
 	private ConsumerFinancialsRepository consumerFinancialsRepository;
-	@Autowired
+	@Inject
 	private FileOperation fileOperation;
-	@Autowired
+	@Inject
 	private AdditionalAttachmentRepository additionalAttachmentRepository;
-	@Autowired
+	@Inject
 	private FinancialImageRepository financialImageRepository;
-	@Autowired
+	@Inject
 	private ConsumerBusinessBasicInfoRepository consumerBusinessBasicInfoRepository;
 
 	private static final Logger LOG = LoggerFactory.getLogger(CompanyInfoService.class);

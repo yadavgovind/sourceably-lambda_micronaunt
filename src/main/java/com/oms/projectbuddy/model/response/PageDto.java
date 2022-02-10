@@ -11,6 +11,6 @@ public class PageDto {
 
     private Object dataSet;
     private int totalPages;
-    private Long totalElements;
+    private int totalElements;
     private int number;
 }

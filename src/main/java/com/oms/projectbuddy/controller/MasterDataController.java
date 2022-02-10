@@ -7,10 +7,11 @@ import com.oms.projectbuddy.repository.ContactUsRepository;
 import com.oms.projectbuddy.services.IAddressService;
 import com.oms.projectbuddy.utility.EmailTemplates;
 import com.oms.projectbuddy.utility.SmsEmailIntegration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+import jakarta.inject.Inject;
+
 
 import java.util.List;
 
@@ -18,62 +19,62 @@ import java.util.List;
 @Controller("/api/m")
 public class MasterDataController {
 
-    @Autowired
+    @Inject
     private IAddressService iAddressService;
-    @Autowired
+    @Inject
     ContactUsRepository contactUsRepository;
-    @Autowired
+    @Inject
     SmsEmailIntegration smsEmailIntegration;
-    @Autowired
+    @Inject
     EmailTemplates emailTemplates;
 
-    @GetMapping("/getAllCountry")
-    public ResponseEntity<?> getAllCountry() {
-            return new ResponseEntity<>(new EntityResponse(iAddressService.getAllCountry(), 0), HttpStatus.OK);
+    @Get("/getAllCountry")
+    public Object getAllCountry() {
+            return new EntityResponse(iAddressService.getAllCountry(), 0);
     }
 
 
 
-    @GetMapping("/getCountryByRegion")
-    public ResponseEntity<?> getCountryByRegion(@RequestParam String region)   {
-            return new ResponseEntity<>(new EntityResponse(iAddressService.getCountryByRegion(region), 0), HttpStatus.OK);
+    @Get("/getCountryByRegion")
+    public Object getCountryByRegion( String region)   {
+            return new EntityResponse(iAddressService.getCountryByRegion(region), 0);
     }
 
 
-    @GetMapping("/getState")
-    public ResponseEntity<?> getState(@RequestParam Long countryId)   {
-            return new ResponseEntity<>(new EntityResponse(iAddressService.getStateByCountry(countryId), 0), HttpStatus.OK);
+    @Get("/getState")
+    public Object getState( Long countryId)   {
+            return new EntityResponse(iAddressService.getStateByCountry(countryId), 0);
     }
 
-    @GetMapping("/getCityByStateId")
-    public ResponseEntity<?> getCityByState(@RequestParam Long stateId)   {
-            return new ResponseEntity<>(new EntityResponse(iAddressService.getCityByStateId(stateId), 0), HttpStatus.OK);
+    @Get("/getCityByStateId")
+    public Object getCityByState( Long stateId)   {
+            return new EntityResponse(iAddressService.getCityByStateId(stateId), 0);
     }
 
-    @PostMapping("/contactUs")
-    public ResponseEntity<ContactUs> createContact(@RequestBody ContactUs contactUs) {
+    @Post("/contactUs")
+    public Object createContact(@Body ContactUs contactUs) {
         smsEmailIntegration.sendEmail("murali.osuraman@sourceably.com", contactUs.getQuery(), contactUs.getMessage());
         smsEmailIntegration.sendSms(contactUs.getMobileno(), "Hi," + contactUs.getName() + "thanks for reaching us our team will contact you soon");
-        return ResponseEntity.ok(contactUsRepository.save(contactUs));
+        return contactUsRepository.save(contactUs);
     }
 
-    @GetMapping("/contactUs/{id}")
-    public ResponseEntity<ContactUs> createContact(@PathVariable Long id) {
+    @Get("/contactUs/{id}")
+    public Object createContact(@PathVariable Long id) {
 
-        return ResponseEntity.ok(contactUsRepository.getOne(id));
+        return contactUsRepository.findById(id).get();
     }
 
-    @PostMapping("/sendEmail")
-    public ResponseEntity<String> sendEmail(@RequestBody List<MailDto> dtoList) {
+    @Post("/sendEmail")
+    public Object sendEmail(@Body List<MailDto> dtoList) {
         dtoList.forEach(item -> {
             String welcome = "";
             String template = emailTemplates.supplierTemplate(welcome);
             smsEmailIntegration.sendEmail(item.getTo(), item.getSubject(), template);
         });
-        return ResponseEntity.ok("All send successfully");
+        return "All send successfully";
     }
 
-    @GetMapping("/hello")
+    @Get("/hello")
     public String hello() {
         return "hello Contatiner";
     }

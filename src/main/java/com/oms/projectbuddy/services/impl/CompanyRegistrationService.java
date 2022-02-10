@@ -55,41 +55,41 @@ import com.oms.projectbuddy.utils.UserRoleType;
 @Service
 public class CompanyRegistrationService implements UserDetailsService,ICompanyRegistrationService {
 	
-	@Autowired
+	@Inject
     private BCryptPasswordEncoder bcryptEncoder;
 
-	@Autowired
+	@Inject
 	private SmsEmailIntegration smsEmailIntegration;
 	
-	@Autowired
+	@Inject
 	private CompanyRepository companyRepository;
 	
-	@Autowired
+	@Inject
 	private TokenProvider tokenProvider;
 
-	@Autowired
+	@Inject
 	private CountryRepository countryRepository;
 	 
-	@Autowired 
+	@Inject
 	private OtpService otpService;
 
-//	 @Autowired
+//	 @Inject
 //	 private FileOperation fileOperation;
 
-	@Autowired
+	@Inject
 	private BusinessBasicInfoRepository basicInfoRepository;
 
-	@Autowired
+	@Inject
 	private CompanyLogoRepository companyLogoRepository;
 	
 	@Lazy
-	@Autowired
+	@Inject
 	private AuthenticationManager authenticationManager;
 
-	@Autowired
+	@Inject
 	private ConsumerBusinessBasicInfoRepository consumerInfoRepository;
 	
-	@Autowired
+	@Inject
 	RegexUtil regexUtil;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

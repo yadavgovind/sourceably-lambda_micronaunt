@@ -20,25 +20,25 @@ import java.time.Instant;
 
 @Service
 public class ConsumerInfoService implements IConsumerInfoService {
-    @Autowired
+    @Inject
     private CompanyRepository registrationRepository;
-    @Autowired
+    @Inject
     private ConsumerBusinessBasicInfoRepository consumerBusinessBasicInfoRepository;
-    @Autowired
+    @Inject
     private ConsumerBankingInfoRepository consumerBankingInfoRepository;
-    @Autowired
+    @Inject
     private ConsumerCompanyDetailsRepository consumerCompanyDetailsRepository;
-    @Autowired
+    @Inject
     private ConsumerSalesRepository consumerSalesRepository;
-    @Autowired
+    @Inject
     private ConsumerHighlightsRepository consumerHighlightsRepository;
-    @Autowired
+    @Inject
     private ConsumerFinancialsRepository consumerFinancialsRepository;
-//    @Autowired
+//    @Inject
 //    private FileOperation fileOperation;
-    @Autowired
+    @Inject
     private FinancialImageRepository financialImageRepository;
-    @Autowired
+    @Inject
     private AdditionalAttachmentRepository additionalAttachmentRepository;
 
     private static final Logger LOG = LoggerFactory.getLogger(ConsumerInfoService.class);

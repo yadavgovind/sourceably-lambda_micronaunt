@@ -37,7 +37,7 @@ import static com.oms.projectbuddy.utils.Constants.*;
 @Service
 public class PaypalService implements IPaypalService {
 
-    @Autowired
+    @Inject
     private RestTemplate restTemplate;
 
     @Value("${paypal.api.oauthtoken.url}")
@@ -61,16 +61,16 @@ public class PaypalService implements IPaypalService {
     @Value("${paypal.pb.product.id}")
     private String paypalPBProductId;
 
-    @Autowired
+    @Inject
     private ISessionService sessionService;
 
-    @Autowired
+    @Inject
     private MembershipPlanSelectionRepository membershipPlanSelectionRepository;
 
-    @Autowired
+    @Inject
     private PaypalPaymentDetailRepository paypalPaymentDetailRepository;
 
-    @Autowired
+    @Inject
     private SmsEmailIntegration smsEmailIntegration;
 
     private String paypalAuthorizationTokenRequest() throws JsonProcessingException {

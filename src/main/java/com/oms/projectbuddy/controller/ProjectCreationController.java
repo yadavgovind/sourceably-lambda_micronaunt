@@ -4,16 +4,16 @@ package com.oms.projectbuddy.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.microsoft.schemas.office.visio.x2012.main.PageType;
 import com.oms.projectbuddy.dto.BidDocumentRequestDto;
 import com.oms.projectbuddy.model.ProjectCreation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+
 
 import com.oms.projectbuddy.model.request.ProjectBidPostRequest;
 import com.oms.projectbuddy.model.request.ProjectCreationRequest;
@@ -22,233 +22,231 @@ import com.oms.projectbuddy.model.request.ProviderNdaDocRequest;
 import com.oms.projectbuddy.model.response.CustomResponseMessage;
 import com.oms.projectbuddy.model.response.EntityResponse;
 import com.oms.projectbuddy.services.IProjectCreationService;
-
-import io.swagger.annotations.Api;
+import jakarta.inject.Inject;
 
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/api")
-@Api(value = "Consumer project creation", description = "Consumer project", tags = {"Consumer project"})
+//@Api(value = "Consumer project creation", description = "Consumer project", tags = {"Consumer project"})
 public class ProjectCreationController {
-    @Autowired
+    @Inject
     private IProjectCreationService iProjectCreationService;
 
-    @PostMapping("/createConsumerProject")
-    public ResponseEntity<?> saveConsumerProject(@RequestBody ProjectCreationRequest projectRequest) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.saveUpdateProject(projectRequest), 0), HttpStatus.OK);
+    @Post("/createConsumerProject")
+    public Object saveConsumerProject(@Body ProjectCreationRequest projectRequest) throws Exception {
+    	return new EntityResponse(iProjectCreationService.saveUpdateProject(projectRequest), 0);
     }
 
-    @GetMapping("/checkConsumerNda")
-    public ResponseEntity<?> checkConsumerNda(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.checkConsumerNDA(userId), 0), HttpStatus.OK);
+    @Get("/checkConsumerNda")
+    public Object checkConsumerNda( String userId) throws Exception {
+    	return new EntityResponse(iProjectCreationService.checkConsumerNDA(userId), 0);
     }
 
-//    @PostMapping("/uploadProjectDoc")
-//    public ResponseEntity<?> uploadProjectDoc(@RequestBody ProjectDocS3Request docS3Request) {
+//    @Post("/uploadProjectDoc")
+//    public Object uploadProjectDoc(@Body ProjectDocS3Request docS3Request) {
 //        try {
-//            return new ResponseEntity<>(new EntityResponse(iProjectCreationService.projectDocS3upload(docS3Request), 0), HttpStatus.OK);
+//            return new EntityResponse(iProjectCreationService.projectDocS3upload(docS3Request), 0);
 //        } catch (Exception e) {
-//            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+//            return new CustomResponseMessage(e.getMessage(), -1);
 //        }
 //    }
 //
-//    @DeleteMapping("/deletedProjectDoc")
-//    public ResponseEntity<?> deletedProjectDoc(@RequestParam String fileName) {
+//    @Delete("/deletedProjectDoc")
+//    public Object deletedProjectDoc( String fileName) {
 //        try {
-//            return new ResponseEntity<>(new CustomResponseMessage(iProjectCreationService.deleteS3Document(fileName), 0), HttpStatus.OK);
+//            return new CustomResponseMessage(iProjectCreationService.deleteS3Document(fileName), 0);
 //        } catch (Exception e) {
-//            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+//            return new CustomResponseMessage(e.getMessage(), -1);
 //        }
 //    }
 
-    @DeleteMapping("/deleteProject")
-    public ResponseEntity<?> deleteProjectById(@RequestParam String systemGenerateProjectId) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iProjectCreationService.deleteProjectByProjectCode(systemGenerateProjectId), 0), HttpStatus.OK);
+    @Delete("/deleteProject")
+    public Object deleteProjectById( String systemGenerateProjectId) throws Exception {
+    	return new CustomResponseMessage(iProjectCreationService.deleteProjectByProjectCode(systemGenerateProjectId), 0);
     }
 
-    @PutMapping("/changeProjectStatus")
-    public ResponseEntity<?> changeProjectStatus(@RequestParam String systemGenerateProjectId) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iProjectCreationService.changeProjectStatus(systemGenerateProjectId), 0), HttpStatus.OK);
+    @Put("/changeProjectStatus")
+    public Object changeProjectStatus( String systemGenerateProjectId) throws Exception {
+    	return new CustomResponseMessage(iProjectCreationService.changeProjectStatus(systemGenerateProjectId), 0);
     }
 
-    @GetMapping("/getAllProjects")
-    public ResponseEntity<Page<ProjectCreation>> getAllProjects(@RequestParam(value = "page", required = false) Integer page,
-                                                                @RequestParam(value = "size", required = false) Integer size,
-                                                                @RequestParam Long sort) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
-        return new ResponseEntity<>(iProjectCreationService.getAllProject(pageable, sort), HttpStatus.OK);
+    @Get("/getAllProjects")
+    public  Page<ProjectCreation> getAllProjects(  Integer page,
+                                                                 Integer size,
+                                                                 Long sort) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
+        return iProjectCreationService.getAllProject(pageable, sort);
     }
 
-    @GetMapping("/searchProjects")
-    public ResponseEntity<?> searchProjectByProjectTitle(@RequestParam(value = "page", required = false) Integer page,
-                                                         @RequestParam(value = "size", required = false) Integer size,
-                                                         @RequestParam String searchtext,
-                                                         @RequestParam String sort, @RequestParam String providerId) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
-        return new ResponseEntity<>(new EntityResponse(iProjectCreationService.searchProjectByText(pageable, searchtext, sort, providerId), 0), HttpStatus.OK);    }
+    @Get("/searchProjects")
+    public Object searchProjectByProjectTitle(  Integer page,
+                                                          Integer size,
+                                                          String searchtext,
+                                                          String sort,  String providerId) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
+        return new EntityResponse(iProjectCreationService.searchProjectByText(pageable, searchtext, sort, providerId), 0);    }
 
-    @GetMapping("/searchProjectsByCategory")
-    public ResponseEntity<?> searchProjectByProjectCategory(@RequestParam(value = "page", required = false) Integer page,
-                                                            @RequestParam(value = "size", required = false) Integer size,
-                                                            @RequestParam String subCategoryId,
-                                                            @RequestParam(value = "subCategory2Id", required = false) String subCategory2Id,
-                                                            @RequestParam(value = "subCategory3Id", required = false) String subCategory3Id,
-                                                            @RequestParam String providerId) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
-        return new ResponseEntity<>(new EntityResponse(iProjectCreationService.searchProjectByCategory(pageable, subCategoryId,subCategory2Id,subCategory3Id, providerId), 0), HttpStatus.OK);
+    @Get("/searchProjectsByCategory")
+    public Object searchProjectByProjectCategory(  Integer page,
+                                                             Integer size,
+                                                             String subCategoryId,
+                                                             String subCategory2Id,
+                                                              String subCategory3Id,
+                                                             String providerId) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
+        return new EntityResponse(iProjectCreationService.searchProjectByCategory(pageable, subCategoryId,subCategory2Id,subCategory3Id, providerId), 0);
     }
 
-    @GetMapping("/filterProject")
-    public ResponseEntity<?> filterProject(@RequestParam(value = "page", required = false) Integer page,
-                                           @RequestParam(value = "size", required = false) Integer size,
-                                           @RequestParam(value = "budgetRange", required = false) String budgetRange,
-                                           @RequestParam(value = "teamSize", required = false) String teamSize, @RequestParam String providerId) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
-        return new ResponseEntity<>(new EntityResponse(iProjectCreationService.filterProject(pageable, budgetRange, teamSize, providerId), 0), HttpStatus.OK);
+    @Get("/filterProject")
+    public Object filterProject(  Integer page,
+                                           Integer size,
+                                           String budgetRange,
+                                             String teamSize,  String providerId) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
+        return new EntityResponse(iProjectCreationService.filterProject(pageable, budgetRange, teamSize, providerId), 0);
     }
 
-    @GetMapping("/getProjectsByCompanyId")
-    public ResponseEntity<?> getProjectById(@RequestParam String companyId,
-                                            @RequestParam(value = "page", required = false) Integer page,
-                                            @RequestParam(value = "size", required = false) Integer size) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
-        return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getProjectByCompanyId(companyId, pageable), 0), HttpStatus.OK);
+    @Get("/getProjectsByCompanyId")
+    public Object getProjectById( String companyId,
+                                             Integer page,
+                                             Integer size) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
+        return new EntityResponse(iProjectCreationService.getProjectByCompanyId(companyId, pageable), 0);
     }
 
-    @GetMapping("/getProjectsByProjectId")
-    public ResponseEntity<?> getProjectByProjectId(@RequestParam String systemGenerateProjectId, @RequestParam String userId, @RequestParam String type) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getProjectByProjectCode(systemGenerateProjectId, userId, type), 0), HttpStatus.OK);
+    @Get("/getProjectsByProjectId")
+    public Object getProjectByProjectId( String systemGenerateProjectId,  String userId,  String type) throws Exception {
+    	return new EntityResponse(iProjectCreationService.getProjectByProjectCode(systemGenerateProjectId, userId, type), 0);
     }
 
-    @PostMapping("/CreateProjectinvites")
-    public ResponseEntity<?> saveProjectInvites(@RequestBody ProjectInviteListRequest inviteRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iProjectCreationService.addUpdateProjectInvite(inviteRequest), 0), HttpStatus.OK);
+    @Post("/CreateProjectinvites")
+    public Object saveProjectInvites(@Body ProjectInviteListRequest inviteRequest) throws Exception {
+    	return new CustomResponseMessage(iProjectCreationService.addUpdateProjectInvite(inviteRequest), 0);
     }
 
-    @GetMapping("/getProjectInvite")
-    public ResponseEntity<?> getProjectInvite(@RequestParam String systemGenerateProjectId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getProjectInvitesByProjectCode(systemGenerateProjectId), 0), HttpStatus.OK);
+    @Get("/getProjectInvite")
+    public Object getProjectInvite( String systemGenerateProjectId) throws Exception {
+    	return new EntityResponse(iProjectCreationService.getProjectInvitesByProjectCode(systemGenerateProjectId), 0);
     }
 
-    @GetMapping("/getAllProjectInvite")
-    public ResponseEntity<?> getAllProjectInvite() throws Exception{
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getAllProjectInvites(), 0), HttpStatus.OK);
+    @Get("/getAllProjectInvite")
+    public Object getAllProjectInvite() throws Exception{
+    	return new EntityResponse(iProjectCreationService.getAllProjectInvites(), 0);
     }
 
-    @PutMapping("/changeProjectInviteStatus")
-    public ResponseEntity<?> changeProjectInviteStatus(@RequestParam Long id) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.changeProjectInviteListStatus(id), 0), HttpStatus.OK);
+    @Put("/changeProjectInviteStatus")
+    public Object changeProjectInviteStatus( Long id) throws Exception {
+    	return new EntityResponse(iProjectCreationService.changeProjectInviteListStatus(id), 0);
     }
 
-    @DeleteMapping("/removeProjectDocument")
-    public ResponseEntity<?> removeProjectDocument(@RequestParam Long documentId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.deleteProjectDocument(documentId), 0), HttpStatus.OK);
+    @Delete("/removeProjectDocument")
+    public Object removeProjectDocument( Long documentId) throws Exception {
+    	return new EntityResponse(iProjectCreationService.deleteProjectDocument(documentId), 0);
     }
 
-    @GetMapping("/getProjectMilestone")
-    public ResponseEntity<?> getProjectMilestone(@RequestParam String projectCode) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getProjectMileStone(projectCode), 0), HttpStatus.OK);
+    @Get("/getProjectMilestone")
+    public Object getProjectMilestone( String projectCode) throws Exception {
+    	return new EntityResponse(iProjectCreationService.getProjectMileStone(projectCode), 0);
     }
 
-    @PostMapping("/saveProjectBid")
-    public ResponseEntity<?> saveProjectBid(@RequestBody ProjectBidPostRequest postRequest) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.saveProjectBid(postRequest), 0), HttpStatus.OK);
+    @Post("/saveProjectBid")
+    public Object saveProjectBid(@Body ProjectBidPostRequest postRequest) throws Exception {
+    	return new EntityResponse(iProjectCreationService.saveProjectBid(postRequest), 0);
     }
 
-    @PutMapping("/updateProjectBid")
-    public ResponseEntity<?> updateProjectBid(@RequestBody ProjectBidPostRequest postRequest) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.updateProjectBid(postRequest), 0), HttpStatus.OK);
+    @Put("/updateProjectBid")
+    public Object updateProjectBid(@Body ProjectBidPostRequest postRequest) throws Exception {
+    	return new EntityResponse(iProjectCreationService.updateProjectBid(postRequest), 0);
     }
 
-    @PostMapping("/projectBidDocument")
-    public ResponseEntity<?> updateProjectBidDocument(@RequestBody List<BidDocumentRequestDto> bidDocumentRequestDto) {
+    @Post("/projectBidDocument")
+    public Object updateProjectBidDocument(@Body List<BidDocumentRequestDto> bidDocumentRequestDto) {
         try {
             if(CollectionUtils.isEmpty(bidDocumentRequestDto)){
-                return new ResponseEntity<>(new CustomResponseMessage("please add at least one request", -1), HttpStatus.NOT_ACCEPTABLE);
+                return new CustomResponseMessage("please add at least one request", -1);
             }
             for (BidDocumentRequestDto documentRequestDto : bidDocumentRequestDto) {
                 iProjectCreationService.saveUpdateBidDocument(documentRequestDto.getId(),documentRequestDto.getDocumentStatus(),documentRequestDto.getScore());
             }
 
-            return new ResponseEntity<>(new EntityResponse("Successfully updated All documents", 0), HttpStatus.OK);
+            return new EntityResponse("Successfully updated All documents", 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PostMapping("/saveProviderNDA")
-    public ResponseEntity<?> saveProviderNDA(@RequestBody ProviderNdaDocRequest ndaRequest) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.saveProviderNdaDoc(ndaRequest), 0), HttpStatus.OK);
+    @Post("/saveProviderNDA")
+    public Object saveProviderNDA(@Body ProviderNdaDocRequest ndaRequest) throws Exception {
+    	return new EntityResponse(iProjectCreationService.saveProviderNdaDoc(ndaRequest), 0);
     }
 
-    @PostMapping("/appproveProjectNda")
-    public ResponseEntity<?> approveProjectNda(@RequestParam String systemGeneratedProjectId, @RequestParam String userId,
-                                               @RequestParam String ndaComment) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.approveProjectNda(systemGeneratedProjectId, userId, ndaComment), 0), HttpStatus.OK);
+    @Post("/appproveProjectNda")
+    public Object approveProjectNda( String systemGeneratedProjectId,  String userId,
+                                                String ndaComment) throws Exception {
+    	return new EntityResponse(iProjectCreationService.approveProjectNda(systemGeneratedProjectId, userId, ndaComment), 0);
     }
 
-    @PostMapping("/rejectProjectNda")
-    public ResponseEntity<?> rejectProjectNda(@RequestParam String systemGeneratedProjectId, @RequestParam String userId,
-                                              @RequestParam String ndaComment) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.rejectProjectNda(systemGeneratedProjectId, userId, ndaComment), 0), HttpStatus.OK);
+    @Post("/rejectProjectNda")
+    public Object rejectProjectNda( String systemGeneratedProjectId,  String userId,
+                                               String ndaComment) throws Exception {
+    	return new EntityResponse(iProjectCreationService.rejectProjectNda(systemGeneratedProjectId, userId, ndaComment), 0);
     }
 
-    @GetMapping("/getProjetBidsByProjectId")
-    public ResponseEntity<?> getProjetBidsByProjectId(@RequestParam String systemGeneratedProjectId,
-                                                      @RequestParam(value = "page", required = false) Integer page,
-                                                      @RequestParam(value = "size", required = false) Integer size) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
-        return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getProjetBidsByProjectId(systemGeneratedProjectId, pageable), 0), HttpStatus.OK);
+    @Get("/getProjetBidsByProjectId")
+    public Object getProjetBidsByProjectId( String systemGeneratedProjectId,
+                                                       Integer page,
+                                                        Integer size) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
+        return new EntityResponse(iProjectCreationService.getProjetBidsByProjectId(systemGeneratedProjectId, pageable), 0);
     }
 
-    @PutMapping("/changeBidProposalStatus")
-    public ResponseEntity<?> changeBidProposalStatus(@RequestParam String systemGeneratedProjectId, @RequestParam List<String> userIds, @RequestParam String proposalStatus) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iProjectCreationService.changeBidProposalStatus(systemGeneratedProjectId, userIds, proposalStatus), 0), HttpStatus.OK);
+    @Put("/changeBidProposalStatus")
+    public Object changeBidProposalStatus( String systemGeneratedProjectId,  List<String> userIds,  String proposalStatus) throws Exception {
+    	return new CustomResponseMessage(iProjectCreationService.changeBidProposalStatus(systemGeneratedProjectId, userIds, proposalStatus), 0);
     }
 
-    @DeleteMapping("/deleteBidDocument")
-    public ResponseEntity<?> deleteBidDocument(@RequestParam Long bidId, @RequestParam Long documentId) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iProjectCreationService.deleteBidDocument(bidId, documentId), 0), HttpStatus.OK);
+    @Delete("/deleteBidDocument")
+    public Object deleteBidDocument( Long bidId,  Long documentId) throws Exception {
+    	return new CustomResponseMessage(iProjectCreationService.deleteBidDocument(bidId, documentId), 0);
     }
 
-    @GetMapping("/getProjectsByBid")
-    public ResponseEntity<?> getProjectById(@RequestParam(value = "page", required = false) Integer page,
-                                            @RequestParam(value = "size", required = false) Integer size,
-                                            @RequestParam String providerId) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(30));
-        return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getProjectsBidId(providerId, pageable), 0), HttpStatus.OK);
+    @Get("/getProjectsByBid")
+    public Object getProjectById( Integer page,
+                                              Integer size,
+                                             String providerId) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(30));
+        return new EntityResponse(iProjectCreationService.getProjectsBidId(providerId, pageable), 0);
     }
 
-    @GetMapping("/getAllProjectsDetails")
-    public ResponseEntity<?> getAllProjects(@RequestParam(value = "page", required = false) Integer page,
-                                            @RequestParam(value = "size", required = false) Integer size,
-                                            @RequestParam Long sort, @RequestParam String providerId) throws Exception {
-    	Pageable pageable = PageRequest.of(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
-        return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getAllProjectsDetails(pageable, sort, providerId), 0), HttpStatus.OK);
+    @Get("/getAllProjectsDetails")
+    public Object getAllProjects( Integer page,
+                                            Integer size,
+                                             Long sort,  String providerId) throws Exception {
+    	Pageable pageable = Pageable.from(Optional.ofNullable(page).orElse(0), Optional.ofNullable(size).orElse(10));
+        return new EntityResponse(iProjectCreationService.getAllProjectsDetails(pageable, sort, providerId), 0);
     }
 
 
-    @GetMapping("/getProjectsByStatus")
-    public ResponseEntity<?> getProjectsByStatus(@RequestParam(name = "projectStatus")  String projectStatus) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.getProjectsByStatus(projectStatus), 0),
-                HttpStatus.OK);
+    @Get("/getProjectsByStatus")
+    public Object getProjectsByStatus(  String projectStatus) throws Exception {
+    	return new EntityResponse(iProjectCreationService.getProjectsByStatus(projectStatus), 0);
     }
 
     // To update project status by project code
-    @PutMapping("/updateProjectstatus")
-    public ResponseEntity<?> updateProjectstatus(@RequestParam(name = "projectCode")  String projectCode,@RequestParam(name = "projectStatus")  String projectStatus) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iProjectCreationService.updateProjectstatus(projectCode,projectStatus), 0),HttpStatus.OK);
+    @Put("/updateProjectstatus")
+    public Object updateProjectstatus(  String projectCode,   String projectStatus) throws Exception {
+    	return new EntityResponse(iProjectCreationService.updateProjectstatus(projectCode,projectStatus), 0);
     }
 
     // To publish and unpublish Project
-    @PutMapping("/marketUpdate")
-    public ResponseEntity<?> marketUpdate(@RequestParam(name = "projectCode")  String projectCode,@RequestParam(name = "publish")  Boolean isPublish) {
+    @Put("/marketUpdate")
+    public Object marketUpdate(   String projectCode,   Boolean isPublish) {
 
         try {
-            return new ResponseEntity<>(new EntityResponse(iProjectCreationService.marketUpdate(projectCode,isPublish), 0),HttpStatus.OK);
+            return new EntityResponse(iProjectCreationService.marketUpdate(projectCode,isPublish), 0);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 }

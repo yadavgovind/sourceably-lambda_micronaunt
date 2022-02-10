@@ -1,7 +1,7 @@
 package com.oms.projectbuddy.repository;
 
 import com.oms.projectbuddy.model.ProjectBidPost;
-import import io.micronaut.data.annotation.Query;
+  import io.micronaut.data.annotation.Query;
 import io.micronaut.data.model.Page;
 
 import io.micronaut.data.jpa.repository.JpaRepository;

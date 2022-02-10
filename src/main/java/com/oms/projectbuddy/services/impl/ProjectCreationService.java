@@ -1,5 +1,6 @@
 package com.oms.projectbuddy.services.impl;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -21,15 +22,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.context.ServerRequestContext;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import com.oms.projectbuddy.dto.CountryRevenueDto;
 import com.oms.projectbuddy.dto.DashBoardDto;
@@ -89,7 +90,7 @@ import com.oms.projectbuddy.utils.NdaStatus;
 import com.oms.projectbuddy.utils.ProjectStatus;
 import com.oms.projectbuddy.utils.StatusEnum;
 
-@Service
+@Singleton
 public class ProjectCreationService implements IProjectCreationService {
 
     private static final String GRANTED_PROJECTS = "Granted Projects";
@@ -108,52 +109,52 @@ public class ProjectCreationService implements IProjectCreationService {
 
     private static final String CUSTOMER_TYPE = "customer";
 
-    @Autowired
+    @Inject
     private ProjectCreationRepository projectCreationRepository;
-    @Autowired
+    @Inject
     private CompanyRepository companyRepository;
-    @Autowired
+    @Inject
     private ProjectInviteListRepository projectInviteListRepository;
-    //    @Autowired
+    //    @Inject
 //    private FileOperation fileOperations;
-    @Autowired
+    @Inject
     private ProjectDocumentUploadRepository projectDocumentUploadRepository;
-    @Autowired
+    @Inject
     private ProjectInviteEmailsRepository projectInviteEmailsRepository;
-    @Autowired
+    @Inject
     private ProjectMilestoneRepository projectMilestoneRepository;
-    @Autowired
+    @Inject
     private ProjectBidPostRepository projectBidPostRepository;
-    @Autowired
+    @Inject
     private ProjectBidDocumentsRepository projectBidDocumentsRepository;
-    @Autowired
+    @Inject
     private ConsumerSalesRepository consumerSalesRepository;
-    @Autowired
+    @Inject
     private SmsEmailIntegration smsEmailIntegration;
-    @Autowired
+    @Inject
     private SkillMatrixCategoryRepository skillMatrixCategoryRepository;
-    @Autowired
+    @Inject
     private ConsumerBusinessBasicInfoRepository consumerBusinessBasicInfoRepository;
 
-    @Autowired
+    @Inject
     private CertificationService certificationService;
-    @Autowired
+    @Inject
     private BusinessBasicInfoRepository basicInfoRepository;
-    @Autowired
+    @Inject
     private CompanyLogoRepository companyLogoRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
-    @Autowired
+//    @Inject
+//    private JavaMailSender mailSender;
+    @Inject
     private DateTimeUtil dateTimeUtil;
 
-    @Autowired
+    @Inject
     private BusinessCertificatesRepository businessCertificatesRepository;
 
-    @Autowired
+    @Inject
     private ProviderBCertificateDataRepository providerBCertificateDataRepository;
 
-    @Autowired
+    @Inject
     private SoftwareEvaluationRepository softwareEvaluationRepository;
 
     @PersistenceContext
@@ -452,8 +453,16 @@ public class ProjectCreationService implements IProjectCreationService {
                     .findAllByIsDeletedAndIsActiveAndMarketplaceAndExpiryDateGreaterThanEqualOrderByCreatedEpochTimeDesc(
                             false, true, true, LocalDate.now(), pageable);
         }
+       String loginUserName="";
+        Optional<HttpRequest<Object>> securityContext = ServerRequestContext.currentRequest();
+        if(securityContext.isPresent()){
+            Optional<Principal> principal = securityContext.get().getUserPrincipal();
+            if(principal.isPresent()){
+                loginUserName= principal.get().getName();
+            }
 
-        String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        }
+
         CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName);
         ExceptionUtils.verifyDataNotExistThenThrowException(companyReg);
 
@@ -524,9 +533,9 @@ public class ProjectCreationService implements IProjectCreationService {
                             LocalDate.now(), pageable);
 
         }
-        String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-        CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName);
-        ExceptionUtils.verifyDataNotExistThenThrowException(companyReg);
+
+        CompanyRegistration companyReg = getRegisterCompanyByLoggedInUser();
+        ExceptionUtils.verifyDataNotExistThenThrowException(getRegisterCompanyByLoggedInUser());
 
         for (ProjectCreation creation : projectCreation.getContent()) {
             if (providerId.equalsIgnoreCase("0")) {
@@ -582,7 +591,7 @@ public class ProjectCreationService implements IProjectCreationService {
             creation.setDocuments(documents);
         }
         return new PageDto(projectCreation.getContent(), projectCreation.getTotalPages(),
-                projectCreation.getTotalElements(), projectCreation.getNumber());
+                projectCreation.getNumberOfElements(), projectCreation.getPageNumber());
     }
 
     @Override
@@ -596,8 +605,9 @@ public class ProjectCreationService implements IProjectCreationService {
                             LocalDate.now(), pageable);
         }
         try {
-            String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-            CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName.toLowerCase());
+
+            CompanyRegistration companyReg = getRegisterCompanyByLoggedInUser();
+
             ExceptionUtils.verifyDataNotExistThenThrowException(companyReg);
             for (ProjectCreation creation : projectCreation.getContent()) {
                 if (projectBidPostRepository.existsByProviderIdAndSystemGeneratedProjectId(providerId,
@@ -655,7 +665,7 @@ public class ProjectCreationService implements IProjectCreationService {
             e.printStackTrace();
         }
         return new PageDto(projectCreation.getContent(), projectCreation.getTotalPages(),
-                projectCreation.getTotalElements(), projectCreation.getNumber());
+                projectCreation.getNumberOfElements(), projectCreation.getPageNumber());
     }
 
     @Override
@@ -665,8 +675,8 @@ public class ProjectCreationService implements IProjectCreationService {
             try {
                 Page<ProjectCreation> projectCreation = projectCreationRepository.searchByProjectTitle(searchtext,
                         pageable);
-                String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-                CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName);
+                CompanyRegistration companyReg = getRegisterCompanyByLoggedInUser();
+
                 ExceptionUtils.verifyDataNotExistThenThrowException(companyReg);
                 for (ProjectCreation creation : projectCreation.getContent()) {
 
@@ -738,7 +748,7 @@ public class ProjectCreationService implements IProjectCreationService {
                     }
                 }
                 return new PageDto(projectCreation.getContent(), projectCreation.getTotalPages(),
-                        projectCreation.getTotalElements(), projectCreation.getNumber());
+                        projectCreation.getNumberOfElements(), projectCreation.getPageNumber());
 
             } catch (Exception e) {
             	throw new SourceablyCustomeException(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
@@ -774,8 +784,8 @@ public class ProjectCreationService implements IProjectCreationService {
             } else {
                 page = projectCreationRepository.getProjectSubCategoryId(str, true, pageable);
             }
-            String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-            CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName);
+              CompanyRegistration companyReg = getRegisterCompanyByLoggedInUser();
+
             for (ProjectCreation creation : page.getContent()) {
                 if (providerId.equalsIgnoreCase("0")) {
                     creation.setStatus(0);
@@ -844,7 +854,7 @@ public class ProjectCreationService implements IProjectCreationService {
                 }
             }
 
-            return new PageDto(page.getContent(), page.getTotalPages(), page.getTotalElements(), page.getNumber());
+            return new PageDto(page.getContent(), page.getTotalPages(), page.getNumberOfElements(), page.getPageNumber());
 
         } catch (Exception e) {
         	throw new SourceablyCustomeException(Constants.DATA_NOT_FOUND, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -856,8 +866,9 @@ public class ProjectCreationService implements IProjectCreationService {
             ProjectCreation creation = projectCreationRepository.findByProjectCodeAndIsDeleted(systemGenerateProjectId,
                     false);
             ExceptionUtils.verifyDataNotExistThenThrowException(creation, "SystemGenerateProjectId not found");
-            String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-            CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName);
+
+            CompanyRegistration companyReg = getRegisterCompanyByLoggedInUser();
+
             try {
                 if (projectMilestoneRepository.existsByProjectId(creation.getProjectCode())) {
                     ProjectMilestoneListResponse dto = getValueByUserType(companyReg, creation);
@@ -918,8 +929,9 @@ public class ProjectCreationService implements IProjectCreationService {
             Page<ProjectCreation> projectCreation = projectCreationRepository
                     .findByCompanyIdAndIsDeletedOrderByIdDesc(projectCompanyId, false, pageable);
             ExceptionUtils.verifyDataNotExistThenThrowException(projectCreation);
-            String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-            CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName.toLowerCase());
+
+            CompanyRegistration companyReg = getRegisterCompanyByLoggedInUser();
+
             ExceptionUtils.verifyDataNotExistThenThrowException(companyReg);
             for (ProjectCreation creation : projectCreation.getContent()) {
                 creation.setBidCount(projectBidPostRepository.countProjectBid(creation.getProjectCode()));
@@ -934,7 +946,7 @@ public class ProjectCreationService implements IProjectCreationService {
                 }
             }
             return new PageDto(projectCreation.getContent(), projectCreation.getTotalPages(),
-                    projectCreation.getTotalElements(), projectCreation.getNumber());
+                    projectCreation.getNumberOfElements(), projectCreation.getPageNumber());
         } else {
         	throw new SourceablyCustomeException("ProjectCompanyId not found", HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -1239,8 +1251,8 @@ public class ProjectCreationService implements IProjectCreationService {
 
         }
 
-        return new PageDto(list, projectBidPosts.getTotalPages(), projectBidPosts.getTotalElements(),
-                projectBidPosts.getNumber());
+        return new PageDto(list, projectBidPosts.getTotalPages(), projectBidPosts.getNumberOfElements(),
+                projectBidPosts.getPageNumber());
 
     
     }
@@ -1395,8 +1407,9 @@ public class ProjectCreationService implements IProjectCreationService {
         if (projectBidPostRepository.existsBySystemGeneratedProjectId(systemGeneratedProjectId)) {
             Page<ProjectBidPost> projectBidPostPage = projectBidPostRepository
                     .findBySystemGeneratedProjectId(systemGeneratedProjectId, pageable);
-            String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-            CompanyRegistration companyReg = companyRepository.findByEmail(loginUserName.toLowerCase());
+
+            CompanyRegistration companyReg =getRegisterCompanyByLoggedInUser();
+
             ExceptionUtils.verifyDataNotExistThenThrowException(companyReg);
 
             for (ProjectBidPost projectBidPost : projectBidPostPage.getContent()) {
@@ -1452,7 +1465,7 @@ public class ProjectCreationService implements IProjectCreationService {
 
             }
             return new PageDto(projectBidPostPage.getContent(), projectBidPostPage.getTotalPages(),
-                    projectBidPostPage.getTotalElements(), projectBidPostPage.getNumber());
+                    projectBidPostPage.getNumberOfElements(), projectBidPostPage.getPageNumber());
 
         } else {
         	throw new SourceablyCustomeException("Project bid not found.", HttpStatus.UNPROCESSABLE_ENTITY);
@@ -1990,7 +2003,16 @@ public class ProjectCreationService implements IProjectCreationService {
     }
 
     private CompanyRegistration getRegisterCompanyByLoggedInUser() {
-        String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        String loginUserName="";
+        Optional<HttpRequest<Object>> securityContext = ServerRequestContext.currentRequest();
+        if(securityContext.isPresent()){
+            Optional<Principal> principal = securityContext.get().getUserPrincipal();
+            if(principal.isPresent()){
+                loginUserName= principal.get().getName();
+            }
+
+        }
         return companyRepository.findByEmail(loginUserName.toLowerCase());
     }
 

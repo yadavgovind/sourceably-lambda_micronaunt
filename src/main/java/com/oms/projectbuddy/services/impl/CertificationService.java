@@ -14,18 +14,6 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.oms.projectbuddy.dto.CyberSecurityGraphDataDto;
 import com.oms.projectbuddy.dto.GlobalMarketData;
@@ -54,107 +42,113 @@ import com.oms.projectbuddy.utils.CertificationType;
 import com.oms.projectbuddy.utils.Constants;
 import com.oms.projectbuddy.utils.ExceptionUtils;
 
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.http.HttpStatus;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.service.spi.InjectService;
 
-@Service
+
 @Slf4j
+@Singleton
 public class CertificationService implements ICertificationService {
 
-	@Autowired
+	@Inject
 	private CertificationMasterRepository certificationMasterRepository;
 
-	@Autowired
+	@Inject
 	private ProviderCertificateDataRepository providerCertificateDataRepository;
 
-	@Autowired
+	@Inject
 	private CertificationDataFileDetailsRepository certificationDataFileDetailsRepository;
 
-	@Autowired
+	@Inject
 	private BusinessCertificatesRepository businessCertificatesRepository;
 
-	@Autowired
+	@Inject
 	private ProviderBCertificateDataRepository providerBCertificateDataRepository;
 
-	@Autowired
+	@Inject
 	private ITCertificationUserHistoryRepository itCertificationUserHistoryRepository;
-	@Autowired
+	@Inject
 	private CompanyRepository companyRepository;
 
 	@Override
-	public String bulkUploadCertifications(MultipartFile file) throws IOException {
-		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-		XSSFSheet worksheet = workbook.getSheetAt(0);
-		for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-			if (index > 1) {
-				XSSFRow row = worksheet.getRow(index);
-				try {
-					DataFormatter dataFormatter = new DataFormatter();
-					String levelName1 = "";
-					String levelDescription1 = "";
-					String levelName2 = "";
-					String levelDescription2 = "";
-					String levelName3 = "";
-					String levelDescription3 = "";
-					String y = "";
-					String n = "";
-					String na = "";
-					String evidence = "";
-					String guidence = "";
-					String id = row.getCell(0).getRawValue();
-					if (row.getCell(0) != null) {
-						levelName1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(0))).orElse(null);
-					}
-					if (row.getCell(1) != null) {
-						levelDescription1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(1)))
-								.orElse(null);
-					}
-					if (row.getCell(2) != null) {
-						levelName2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(2))).orElse(null);
-					}
-					if (row.getCell(3) != null) {
-						levelDescription2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(3)))
-								.orElse(null);
-					}
-					if (row.getCell(4) != null) {
-						levelName3 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(4))).orElse(null);
-					}
-					if (row.getCell(5) != null) {
-						y = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(5))).orElse(null);
-					}
-					if (row.getCell(6) != null) {
-						n = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(6))).orElse(null);
-					}
-					if (row.getCell(7) != null) {
-						na = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(7))).orElse(null);
-					}
-					if (row.getCell(8) != null) {
-						levelDescription3 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(8)))
-								.orElse(null);
-					}
-					if (row.getCell(9) != null) {
-						evidence = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(9))).orElse(null);
-					}
-					if (row.getCell(10) != null) {
-						guidence = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(10))).orElse(null);
-					}
-					if (!levelName1.equals("")) {
-						saveCertificationMasterDetails(levelName1, levelDescription1, "L1", guidence, evidence, y, n,
-								na, false, levelName1);
-					}
-					if (!levelName2.equals("")) {
-						saveCertificationMasterDetails(levelName2, levelDescription2, "L2", guidence, evidence, y, n,
-								na, true, levelName1);
-					}
-					if (!levelName3.equals("")) {
-						saveCertificationMasterDetails(levelName3, levelDescription3, "L3", guidence, evidence, y, n,
-								na, true, levelName2);
-					}
-				} catch (Exception e) {
-					throw new SourceablyCustomeException(Constants.DATA_NOT_FOUND, HttpStatus.NO_CONTENT);
-					// e.printStackTrace();
-				}
-			}
-		}
+	public String bulkUploadCertifications(String file) throws IOException {
+//		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+//		XSSFSheet worksheet = workbook.getSheetAt(0);
+//		for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+//			if (index > 1) {
+//				XSSFRow row = worksheet.getRow(index);
+//				try {
+//					DataFormatter dataFormatter = new DataFormatter();
+//					String levelName1 = "";
+//					String levelDescription1 = "";
+//					String levelName2 = "";
+//					String levelDescription2 = "";
+//					String levelName3 = "";
+//					String levelDescription3 = "";
+//					String y = "";
+//					String n = "";
+//					String na = "";
+//					String evidence = "";
+//					String guidence = "";
+//					String id = row.getCell(0).getRawValue();
+//					if (row.getCell(0) != null) {
+//						levelName1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(0))).orElse(null);
+//					}
+//					if (row.getCell(1) != null) {
+//						levelDescription1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(1)))
+//								.orElse(null);
+//					}
+//					if (row.getCell(2) != null) {
+//						levelName2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(2))).orElse(null);
+//					}
+//					if (row.getCell(3) != null) {
+//						levelDescription2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(3)))
+//								.orElse(null);
+//					}
+//					if (row.getCell(4) != null) {
+//						levelName3 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(4))).orElse(null);
+//					}
+//					if (row.getCell(5) != null) {
+//						y = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(5))).orElse(null);
+//					}
+//					if (row.getCell(6) != null) {
+//						n = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(6))).orElse(null);
+//					}
+//					if (row.getCell(7) != null) {
+//						na = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(7))).orElse(null);
+//					}
+//					if (row.getCell(8) != null) {
+//						levelDescription3 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(8)))
+//								.orElse(null);
+//					}
+//					if (row.getCell(9) != null) {
+//						evidence = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(9))).orElse(null);
+//					}
+//					if (row.getCell(10) != null) {
+//						guidence = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(10))).orElse(null);
+//					}
+//					if (!levelName1.equals("")) {
+//						saveCertificationMasterDetails(levelName1, levelDescription1, "L1", guidence, evidence, y, n,
+//								na, false, levelName1);
+//					}
+//					if (!levelName2.equals("")) {
+//						saveCertificationMasterDetails(levelName2, levelDescription2, "L2", guidence, evidence, y, n,
+//								na, true, levelName1);
+//					}
+//					if (!levelName3.equals("")) {
+//						saveCertificationMasterDetails(levelName3, levelDescription3, "L3", guidence, evidence, y, n,
+//								na, true, levelName2);
+//					}
+//				} catch (Exception e) {
+//					throw new SourceablyCustomeException(Constants.DATA_NOT_FOUND, HttpStatus.NO_CONTENT);
+//					// e.printStackTrace();
+//				}
+//			}
+//		}
 		return "Upload Success !";
 	}
 
@@ -319,7 +313,7 @@ public class CertificationService implements ICertificationService {
 
 	private String saveCertificationHistoryDetails(ITCertificationUserHistoryDto itCertificationUserHistoryDto) {
 		ITCertificationUserHistory itCertificationUserHistory = new ITCertificationUserHistory();
-		BeanUtils.copyProperties(itCertificationUserHistoryDto, itCertificationUserHistory);
+		//BeanUtils.copyProperties(itCertificationUserHistoryDto, itCertificationUserHistory);
 		itCertificationUserHistoryRepository.save(itCertificationUserHistory);
 		return "Success !";
 	}
@@ -430,40 +424,40 @@ public class CertificationService implements ICertificationService {
 	}
 
 	@Override
-	public Object uploadBusinessCertificatedDetails(MultipartFile file) throws IOException {
-		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
-		XSSFSheet worksheet = workbook.getSheetAt(0);
-		for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
-			if (index > 6) {
-				XSSFRow row = worksheet.getRow(index);
-				try {
-					DataFormatter dataFormatter = new DataFormatter();
-					String country = "";
-					String level1 = "";
-					String level2 = "";
-
-					String id = row.getCell(0).getRawValue();
-					if (row.getCell(0) != null) {
-						country = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(0))).orElse(null);
-					}
-					if (row.getCell(1) != null) {
-						level1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(1))).orElse(null);
-					}
-					if (row.getCell(2) != null) {
-						level2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(2))).orElse(null);
-					}
-
-					if (level1 != null || !level1.equals("")) {
-						saveBusinessCertificate(level1, level1, country, false);
-					}
-					if (level2 != null || !level2.equals("")) {
-						saveBusinessCertificate(level2, level1, country, true);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	public Object uploadBusinessCertificatedDetails(String file) throws IOException {
+//		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+//		XSSFSheet worksheet = workbook.getSheetAt(0);
+//		for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+//			if (index > 6) {
+//				XSSFRow row = worksheet.getRow(index);
+//				try {
+//					DataFormatter dataFormatter = new DataFormatter();
+//					String country = "";
+//					String level1 = "";
+//					String level2 = "";
+//
+//					String id = row.getCell(0).getRawValue();
+//					if (row.getCell(0) != null) {
+//						country = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(0))).orElse(null);
+//					}
+//					if (row.getCell(1) != null) {
+//						level1 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(1))).orElse(null);
+//					}
+//					if (row.getCell(2) != null) {
+//						level2 = Optional.ofNullable(dataFormatter.formatCellValue(row.getCell(2))).orElse(null);
+//					}
+//
+//					if (level1 != null || !level1.equals("")) {
+//						saveBusinessCertificate(level1, level1, country, false);
+//					}
+//					if (level2 != null || !level2.equals("")) {
+//						saveBusinessCertificate(level2, level1, country, true);
+//					}
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
 		return "Upload Success !";
 	}
 
@@ -757,8 +751,8 @@ public class CertificationService implements ICertificationService {
 	}
 
 	private CompanyRegistration getRegisterCompanyByLoggedInUser() {
-		String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
-		return companyRepository.findByEmail(loginUserName.toLowerCase());
+	//	String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+		return companyRepository.findByEmail("test");
 	}
 
 }

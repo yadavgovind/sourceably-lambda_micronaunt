@@ -4,180 +4,182 @@ import com.oms.projectbuddy.model.request.*;
 import com.oms.projectbuddy.model.response.CustomResponseMessage;
 import com.oms.projectbuddy.model.response.EntityResponse;
 import com.oms.projectbuddy.services.IConsumerInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+import jakarta.inject.Inject;
+
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/api/consumer")
 public class ConsumerInfoController {
-@Autowired
+@Inject
 private IConsumerInfoService iConsumerInfoService;
 
-    @GetMapping("/getConsumerBasicInfoByUserId")
-    public ResponseEntity<?> getConsumerBasicInfo(@RequestParam String userId) throws Exception {
-    	return new ResponseEntity<>(new EntityResponse(iConsumerInfoService.getConsumerBasicInfo(userId), 0), HttpStatus.OK);
+    @Get("/getConsumerBasicInfoByUserId")
+    public Object getConsumerBasicInfo( String userId) throws Exception {
+    	return new EntityResponse(iConsumerInfoService.getConsumerBasicInfo(userId), 0);
     }
 
-    @PostMapping("/saveConsumerBasicInfo")
-    public ResponseEntity<?> saveConsumerBasicInfo(@RequestBody ConsumerBusinessBasicInfoRequest basicInfoRequest) throws Exception {
-    	return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.saveConsumerBasicInfo(basicInfoRequest), 0), HttpStatus.OK);
+    @Post("/saveConsumerBasicInfo")
+    public Object saveConsumerBasicInfo(@Body ConsumerBusinessBasicInfoRequest basicInfoRequest) throws Exception {
+    	return new CustomResponseMessage(iConsumerInfoService.saveConsumerBasicInfo(basicInfoRequest), 0);
     }
 
-    @PutMapping("/updateConsumerBasicInfo")
-    public ResponseEntity<?> updateConsumerBasicInfo(@RequestBody ConsumerBusinessBasicInfoRequest basicInfoRequest) {
+    @Put("/updateConsumerBasicInfo")
+    public Object updateConsumerBasicInfo(@Body ConsumerBusinessBasicInfoRequest basicInfoRequest) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.updateConsumerBasicInfo(basicInfoRequest), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.updateConsumerBasicInfo(basicInfoRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
 
     }
-    @GetMapping("/getConsumerBankInfoByUserId")
-    public ResponseEntity<?> getConsumerBankingInfo(@RequestParam String userId) {
+    @Get("/getConsumerBankInfoByUserId")
+    public Object getConsumerBankingInfo( String userId) {
         try {
-            return new ResponseEntity<>(new EntityResponse(iConsumerInfoService.getConsumerBankingInformation(userId), 0), HttpStatus.OK);
+            return new EntityResponse(iConsumerInfoService.getConsumerBankingInformation(userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PostMapping("/saveConsumerBankingInfo")
-    public ResponseEntity<?> saveConsumerBankingInfo(@RequestBody ConsumerBankingInfoRequest bankingRequest
-                                                      ,@RequestParam String userId) {
+    @Post("/saveConsumerBankingInfo")
+    public Object saveConsumerBankingInfo(@Body ConsumerBankingInfoRequest bankingRequest
+                                                      , String userId) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.saveConsumerBankingInformation(bankingRequest,userId), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.saveConsumerBankingInformation(bankingRequest,userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
 
     }
 
-    @PutMapping("/updateConsumerBankingInfo")
-    public ResponseEntity<?> updateBankingInfo(@RequestBody ConsumerBankingInfoRequest bankingRequest,
-                                               @RequestParam String userId) {
+    @Put("/updateConsumerBankingInfo")
+    public Object updateBankingInfo(@Body ConsumerBankingInfoRequest bankingRequest,
+                                                String userId) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.updateConsumerBankingInformation(bankingRequest,userId), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.updateConsumerBankingInformation(bankingRequest,userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
 
     }
-    @PostMapping("/saveConsumerCompanyOverview")
-    public ResponseEntity<?> saveConsumerDetails(@RequestBody ConsumerDetailsRequest detailsRequest) {
+    @Post("/saveConsumerCompanyOverview")
+    public Object saveConsumerDetails(@Body ConsumerDetailsRequest detailsRequest) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.saveConsumerDetails(detailsRequest), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.saveConsumerDetails(detailsRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PutMapping("/updateConsumerCompanyOverview")
-    public ResponseEntity<?> updateConsumerDetails(@RequestBody ConsumerDetailsRequest detailsRequest) {
+    @Put("/updateConsumerCompanyOverview")
+    public Object updateConsumerDetails(@Body ConsumerDetailsRequest detailsRequest) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.updateConsumerDetails(detailsRequest), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.updateConsumerDetails(detailsRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @GetMapping("/getConsumerCompanyOverviewByUserId")
-    public ResponseEntity<?> getConsumerDetails(@RequestParam String userId) {
+    @Get("/getConsumerCompanyOverviewByUserId")
+    public Object getConsumerDetails( String userId) {
         try {
-            return new ResponseEntity<>(new EntityResponse(iConsumerInfoService.getConsumerDetails(userId), 0), HttpStatus.OK);
+            return new EntityResponse(iConsumerInfoService.getConsumerDetails(userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PostMapping("/saveConsumerHighlights")
-    public ResponseEntity<?> saveConsumerHighlights(@RequestBody ConsumerHighlightsRequest highlightsRequest) {
+    @Post("/saveConsumerHighlights")
+    public Object saveConsumerHighlights(@Body ConsumerHighlightsRequest highlightsRequest) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.saveConsumerHighlights(highlightsRequest), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.saveConsumerHighlights(highlightsRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @GetMapping("/getConsumerHighlightsByUserId")
-    public ResponseEntity<?> getConsumerHighlights(@RequestParam String userId) {
+    @Get("/getConsumerHighlightsByUserId")
+    public Object getConsumerHighlights( String userId) {
         try {
-            return new ResponseEntity<>(new EntityResponse(iConsumerInfoService.getConsumerHighlights(userId), 0), HttpStatus.OK);
+            return new EntityResponse(iConsumerInfoService.getConsumerHighlights(userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
-    @PutMapping("/updateConsumerHighlights")
-    public ResponseEntity<?> updateConsumerHighlights(@RequestBody ConsumerHighlightsRequest highlightsRequest) {
+    @Put("/updateConsumerHighlights")
+    public Object updateConsumerHighlights(@Body ConsumerHighlightsRequest highlightsRequest) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.updateConsumerHighlights(highlightsRequest), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.updateConsumerHighlights(highlightsRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/saveConsumerFinancials")
-    public ResponseEntity<?> saveConsumerFinancials(@RequestBody ConsumerFinancialsRequest financialsRequest) {
-        try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.saveConsumerFinancials(financialsRequest), 0), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @GetMapping("/getConsumerFinancialByUserId")
-    public ResponseEntity<?> getConsumerFinancials(@RequestParam String userId) {
+    @Post("/saveConsumerFinancials")
+    public Object saveConsumerFinancials(@Body ConsumerFinancialsRequest financialsRequest) {
         try {
-            return new ResponseEntity<>(new EntityResponse(iConsumerInfoService.getConsumerFinancials(userId), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.saveConsumerFinancials(financialsRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PutMapping("/updateConsumerFinancial")
-    public ResponseEntity<?> updateConsumerFinancial(@RequestBody ConsumerFinancialsRequest financialsRequest) {
+    @Get("/getConsumerFinancialByUserId")
+    public Object getConsumerFinancials( String userId) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.updateConsumerfinancials(financialsRequest), 0), HttpStatus.OK);
+            return new EntityResponse(iConsumerInfoService.getConsumerFinancials(userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PostMapping("/saveConsumerSales")
-    public ResponseEntity<?> saveConsumerSales(@RequestBody ConsumerSalesRequest salesRequest) {
+    @Put("/updateConsumerFinancial")
+    public Object updateConsumerFinancial(@Body ConsumerFinancialsRequest financialsRequest) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.saveConsumerSales(salesRequest), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.updateConsumerfinancials(financialsRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @GetMapping("/getConsumerSalesByUserId")
-    public ResponseEntity<?> getConsumerSales(@RequestParam String userId) {
+    @Post("/saveConsumerSales")
+    public Object saveConsumerSales(@Body ConsumerSalesRequest salesRequest) {
         try {
-            return new ResponseEntity<>(new EntityResponse(iConsumerInfoService.getConsumerSales(userId), 0), HttpStatus.OK);
+            return new CustomResponseMessage(iConsumerInfoService.saveConsumerSales(salesRequest), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 
-    @PutMapping(value = "/updateConsumerSales" )
-    public ResponseEntity<?> updateCompanySales(@RequestBody ConsumerSalesRequest salesRequest) {
+    @Get("/getConsumerSalesByUserId")
+    public Object getConsumerSales( String userId) {
         try {
-            return new ResponseEntity<>(new CustomResponseMessage(iConsumerInfoService.updateConsumerSales(salesRequest), 0), HttpStatus.OK);
+            return new EntityResponse(iConsumerInfoService.getConsumerSales(userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
+        }
+    }
+
+    @Put(value = "/updateConsumerSales" )
+    public Object updateCompanySales(@Body ConsumerSalesRequest salesRequest) {
+        try {
+            return new CustomResponseMessage(iConsumerInfoService.updateConsumerSales(salesRequest), 0);
+        } catch (Exception e) {
+            return new CustomResponseMessage(e.getMessage(), -1);
 
         }
     }
 
-    @GetMapping("/deleteNdaDocument")
-    public ResponseEntity<?> deleteNdaDocument(@RequestParam String userId) {
+    @Get("/deleteNdaDocument")
+    public Object deleteNdaDocument( String userId) {
         try {
-            return new ResponseEntity<>(new EntityResponse(iConsumerInfoService.deleteNdaDocument(userId), 0), HttpStatus.OK);
+            return new EntityResponse(iConsumerInfoService.deleteNdaDocument(userId), 0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 

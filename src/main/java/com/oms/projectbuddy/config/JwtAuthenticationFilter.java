@@ -25,10 +25,10 @@
 //public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //
 //    @Qualifier("companyRegistrationService")
-//    @Autowired
+//    @Inject
 //    private CompanyRegistrationService companyRegistrationService;
 //
-//    @Autowired
+//    @Inject
 //    private TokenProvider jwtTokenUtil;
 //
 //    @Override

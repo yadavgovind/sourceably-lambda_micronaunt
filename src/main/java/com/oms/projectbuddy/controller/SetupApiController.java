@@ -1,29 +1,27 @@
 package com.oms.projectbuddy.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.oms.projectbuddy.model.response.CustomResponseMessage;
 import com.oms.projectbuddy.model.response.EntityResponse;
 import com.oms.projectbuddy.services.IPaypalService;
+import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+import jakarta.inject.Inject;
 
 @ExecuteOn(TaskExecutors.IO)
 @Controller("/api")
 public class SetupApiController {
 
-    @Autowired
+    @Inject
     private IPaypalService paypalService;
 
-    @PostMapping("/createProduct")
-    public ResponseEntity<?> createProduct() {
+    @Post("/createProduct")
+    public Object createProduct() {
         try {
-            return new ResponseEntity<>(new EntityResponse(paypalService.createProduct(),0), HttpStatus.OK);
+            return new EntityResponse(paypalService.createProduct(),0);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponseMessage(e.getMessage(), -1), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new CustomResponseMessage(e.getMessage(), -1);
         }
     }
 }

@@ -11,11 +11,6 @@ import java.util.stream.Collectors;
 
 import com.oms.projectbuddy.utils.ExceptionUtils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-
 import com.oms.projectbuddy.dto.GlobalMarketData;
 import com.oms.projectbuddy.exception.SourceablyCustomeException;
 import com.oms.projectbuddy.model.CompanyRegistration;
@@ -29,20 +24,23 @@ import com.oms.projectbuddy.repository.ProjectBidDocumentHistoryRepository;
 import com.oms.projectbuddy.repository.ProjectBidPostRepository;
 import com.oms.projectbuddy.repository.SoftwareEvaluationRepository;
 import com.oms.projectbuddy.services.IProjectBidService;
+import io.micronaut.http.HttpStatus;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
-@Service
+@Singleton
 public class ProjectBidService implements IProjectBidService {
 
-    @Autowired
+    @Inject
     private ProjectBidPostRepository projectBidPostRepository;
 
-    @Autowired
+    @Inject
     private CompanyRepository companyRepository;
 
-    @Autowired
+    @Inject
     private ProjectBidDocumentHistoryRepository projectBidDocumentHistoryRepository;
 
-    @Autowired
+    @Inject
     private SoftwareEvaluationRepository softwareEvaluationRepository;
 
     @Override
@@ -69,7 +67,7 @@ public class ProjectBidService implements IProjectBidService {
         sortedMap.putAll(projectBudgetMap);
 
         List<GlobalMarketData> globalMarketData = new ArrayList<>();
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        String name = "";//SecurityContextHolder.getContext().getAuthentication().getName();
         for (Map.Entry<String, List<ProjectBidPost>> projectBidsKeyValue : sortedMap.entrySet()) {
             costValue = costValue
                     + projectBidsKeyValue.getValue().stream().mapToDouble(ProjectBidPost::getProjectCost).sum();

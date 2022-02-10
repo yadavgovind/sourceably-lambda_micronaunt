@@ -2,15 +2,14 @@ package com.oms.projectbuddy.services;
 
 import com.oms.projectbuddy.model.request.SkillMatrixListRequest;
 import com.oms.projectbuddy.model.request.SkillMatrixUpdateRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
+import io.micronaut.data.model.Pageable;
 
 
 import java.io.IOException;
 
 public interface ISkillMatrixService {
 
-    void bukUploadSkillMatrixCategory(MultipartFile file) throws IOException;
+    void bukUploadSkillMatrixCategory(String file) throws IOException;
 
     Object getParentCategoriesdetails(Pageable pageable);
 

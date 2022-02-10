@@ -19,9 +19,9 @@ import java.util.Map;
 
 @Service
 public class EmailService {
-    @Autowired
+    @Inject
     private JavaMailSender mailSender;
-    @Autowired
+    @Inject
     private Configuration config;
 
     public String sendEmail(ProviderMailRequest request, Map<String,Object> model){

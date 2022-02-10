@@ -14,7 +14,7 @@ public class FileOperation {
 //
 //    private AmazonS3 amazonS3;
 
-//    @Autowired
+//    @Inject
 //    public FileOperation(Region awsRegion, AWSCredentialsProvider awsCredentialsProvider, String awsS3Bucket) {
 //        this.amazonS3 = AmazonS3ClientBuilder.standard()
 //                .withCredentials(awsCredentialsProvider)
