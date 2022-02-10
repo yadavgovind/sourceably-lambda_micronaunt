@@ -5,8 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "pb_consumer_company_information" , uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id"}),})
@@ -62,4 +61,196 @@ public class ConsumerBusinessBasicInfo {
     private String lastUpdatedBy;
     @Column(name = "updated_epoch_time")
     private Long updatedEpochTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getAlternateNumber() {
+        return alternateNumber;
+    }
+
+    public void setAlternateNumber(String alternateNumber) {
+        this.alternateNumber = alternateNumber;
+    }
+
+    public String getFaxNumber() {
+        return faxNumber;
+    }
+
+    public void setFaxNumber(String faxNumber) {
+        this.faxNumber = faxNumber;
+    }
+
+    public String getAlternateEmail() {
+        return alternateEmail;
+    }
+
+    public void setAlternateEmail(String alternateEmail) {
+        this.alternateEmail = alternateEmail;
+    }
+
+    public String getPointOfContact() {
+        return pointOfContact;
+    }
+
+    public void setPointOfContact(String pointOfContact) {
+        this.pointOfContact = pointOfContact;
+    }
+
+    public String getEstablishedDate() {
+        return establishedDate;
+    }
+
+    public void setEstablishedDate(String establishedDate) {
+        this.establishedDate = establishedDate;
+    }
+
+    public String getCompanyWebsite() {
+        return companyWebsite;
+    }
+
+    public void setCompanyWebsite(String companyWebsite) {
+        this.companyWebsite = companyWebsite;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public String getCompanyDescription() {
+        return companyDescription;
+    }
+
+    public void setCompanyDescription(String companyDescription) {
+        this.companyDescription = companyDescription;
+    }
+
+    public String getYearsOfRegistered() {
+        return yearsOfRegistered;
+    }
+
+    public void setYearsOfRegistered(String yearsOfRegistered) {
+        this.yearsOfRegistered = yearsOfRegistered;
+    }
+
+    public String getCompanyVideo() {
+        return CompanyVideo;
+    }
+
+    public void setCompanyVideo(String companyVideo) {
+        CompanyVideo = companyVideo;
+    }
+
+    public String getStockPrice() {
+        return stockPrice;
+    }
+
+    public void setStockPrice(String stockPrice) {
+        this.stockPrice = stockPrice;
+    }
+
+    public String getCeoName() {
+        return ceoName;
+    }
+
+    public void setCeoName(String ceoName) {
+        this.ceoName = ceoName;
+    }
+
+    public String getFounders() {
+        return founders;
+    }
+
+    public void setFounders(String founders) {
+        this.founders = founders;
+    }
+
+    public String getHeadquartersCountry() {
+        return headquartersCountry;
+    }
+
+    public void setHeadquartersCountry(String headquartersCountry) {
+        this.headquartersCountry = headquartersCountry;
+    }
+
+    public String getHeadquartersState() {
+        return headquartersState;
+    }
+
+    public void setHeadquartersState(String headquartersState) {
+        this.headquartersState = headquartersState;
+    }
+
+    public String getHeadquartersCity() {
+        return headquartersCity;
+    }
+
+    public void setHeadquartersCity(String headquartersCity) {
+        this.headquartersCity = headquartersCity;
+    }
+
+    public String getProducts() {
+        return products;
+    }
+
+    public void setProducts(String products) {
+        this.products = products;
+    }
+
+    public String getSubsidiary() {
+        return subsidiary;
+    }
+
+    public void setSubsidiary(String subsidiary) {
+        this.subsidiary = subsidiary;
+    }
+
+    public Boolean getAgreeToShare() {
+        return agreeToShare;
+    }
+
+    public void setAgreeToShare(Boolean agreeToShare) {
+        this.agreeToShare = agreeToShare;
+    }
+
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public Long getUpdatedEpochTime() {
+        return updatedEpochTime;
+    }
+
+    public void setUpdatedEpochTime(Long updatedEpochTime) {
+        this.updatedEpochTime = updatedEpochTime;
+    }
 }

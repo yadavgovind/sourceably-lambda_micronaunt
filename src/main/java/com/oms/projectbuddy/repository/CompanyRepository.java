@@ -20,11 +20,11 @@ public interface CompanyRepository extends JpaRepository<CompanyRegistration, Lo
     CompanyRegistration findByUserId(String userId);
 
     Boolean existsByUserId(String userId);
-    List<CompanyRepository> findAllByRegistrationTypeAndIsDeletedAndIsActive(String registrationType, Boolean isdeleted, Boolean isActive);
+//    List<CompanyRepository> findAllByRegistrationTypeAndIsDeletedAndIsActive(String registrationType, Boolean isdeleted, Boolean isActive);
 
 //    @Modifying todo
     @Query(nativeQuery = true, value = " UPDATE company_registration cr SET cr.is_first_login = TRUE where cr.company_id=:companyId  ")
     void updateFirstLogin(@Part("companyId") Long companyId);
 
-    List<CompanyRegistration> findAllByIsDeletedOrderByCreatedEpochTimeDesc(boolean b);
+//    List<CompanyRegistration> findAllByIsDeletedOrderByCreatedEpochTimeDesc(boolean b);
 }

@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "certification_file_details")
 public class CertificationDataFileDetails {
@@ -33,4 +32,59 @@ public class CertificationDataFileDetails {
     @Column(name = "service_type")
     private String serviceType;
 
+    public Long getCertificationDocumentId() {
+        return certificationDocumentId;
+    }
+
+    public void setCertificationDocumentId(Long certificationDocumentId) {
+        this.certificationDocumentId = certificationDocumentId;
+    }
+
+    public Long getProviderCertificationDataId() {
+        return providerCertificationDataId;
+    }
+
+    public void setProviderCertificationDataId(Long providerCertificationDataId) {
+        this.providerCertificationDataId = providerCertificationDataId;
+    }
+
+    public Long getCertificateId() {
+        return certificateId;
+    }
+
+    public void setCertificateId(Long certificateId) {
+        this.certificateId = certificateId;
+    }
+
+    public CertificationType getCertificationType() {
+        return certificationType;
+    }
+
+    public void setCertificationType(CertificationType certificationType) {
+        this.certificationType = certificationType;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getAccessBy() {
+        return accessBy;
+    }
+
+    public void setAccessBy(String accessBy) {
+        this.accessBy = accessBy;
+    }
+
+    public String getServiceType() {
+        return serviceType;
+    }
+
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
 }

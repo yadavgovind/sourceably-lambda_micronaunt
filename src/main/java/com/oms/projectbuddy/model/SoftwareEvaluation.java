@@ -1,23 +1,12 @@
 package com.oms.projectbuddy.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
 
 
 @Entity
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+//@Builder
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Table(name = "sbly_software_evaluation")
 public class SoftwareEvaluation {
 	@Id
@@ -45,6 +34,46 @@ public class SoftwareEvaluation {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
+	}
+
+	public long getWeight() {
+		return weight;
+	}
+
+	public void setWeight(long weight) {
+		this.weight = weight;
+	}
+
+	public long getCustomerRating() {
+		return customerRating;
+	}
+
+	public void setCustomerRating(long customerRating) {
+		this.customerRating = customerRating;
+	}
+
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
+
+	public Long getCriteriaId() {
+		return criteriaId;
+	}
+
+	public void setCriteriaId(Long criteriaId) {
+		this.criteriaId = criteriaId;
 	}
 }
 

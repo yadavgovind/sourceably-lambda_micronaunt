@@ -10,8 +10,8 @@ import java.util.List;
 public interface AdditionalAttachmentRepository extends JpaRepository<AdditionalAttachment,Long> {
 
     List<AdditionalAttachment> findBySalesIdAndUserId(Long salesId, String userId);
-    @Transactional
-    Boolean deleteByIdAndUserId(Long id, String userId);
+//    @Transactional
+//    Boolean deleteByIdAndUserId(Long id, String userId);
 
     Boolean existsByIdAndUserId(Long id, String userId);
 

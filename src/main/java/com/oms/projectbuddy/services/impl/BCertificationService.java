@@ -23,7 +23,7 @@ public class BCertificationService implements IBCertificateService {
     public Object saveBCertificateData(ProviderBCertificateData requestData) {
         ProviderBCertificateData providerBCertificateData  = providerBCertificateDataRepository.findByUserIdAndCertificateId(requestData.getUserId(), requestData.getCertificateId());
         if (providerBCertificateData!=null) {
-            requestData.setBCertificateDataId(providerBCertificateData.getBCertificateDataId());
+            requestData.setbCertificateDataId(providerBCertificateData.getbCertificateDataId());
         }
 
         BCertificatePercentage bCertificatePercentage= new BCertificatePercentage(requestData);
@@ -33,7 +33,7 @@ public class BCertificationService implements IBCertificateService {
         Boolean validDate = new Date(requestData.getStartDate() * 1000).before(new Date(requestData.getEndDate() * 1000));
         bCertificatePercentage.setSourceablyVerifiedScore(requestData.getSelfAttested()?3l:0);
         bCertificatePercentage.setValidDocumentDateScore(validDate?3l:0);
-        requestData.setBCertificatePercentage(bCertificatePercentage);
+        requestData.setbCertificatePercentage(bCertificatePercentage);
         providerBCertificateDataRepository.save(requestData);
 
         return "Data Saved Success !";

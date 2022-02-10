@@ -5,8 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "pb_user_company_details",uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id"}),})
@@ -57,4 +56,180 @@ public class CompanyDetails {
 
     @Column(name = "insured_amount")
     private String insuredAmount;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCompanyDescription() {
+        return companyDescription;
+    }
+
+    public void setCompanyDescription(String companyDescription) {
+        this.companyDescription = companyDescription;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public String getServiceDescription() {
+        return serviceDescription;
+    }
+
+    public void setServiceDescription(String serviceDescription) {
+        this.serviceDescription = serviceDescription;
+    }
+
+    public String getHistory() {
+        return history;
+    }
+
+    public void setHistory(String history) {
+        this.history = history;
+    }
+
+    public String getPublicRelation() {
+        return publicRelation;
+    }
+
+    public void setPublicRelation(String publicRelation) {
+        this.publicRelation = publicRelation;
+    }
+
+    public String getAdvertising() {
+        return advertising;
+    }
+
+    public void setAdvertising(String advertising) {
+        this.advertising = advertising;
+    }
+
+    public String getIndustryInfo() {
+        return industryInfo;
+    }
+
+    public void setIndustryInfo(String industryInfo) {
+        this.industryInfo = industryInfo;
+    }
+
+    public String getGrossAnnualSale() {
+        return grossAnnualSale;
+    }
+
+    public void setGrossAnnualSale(String grossAnnualSale) {
+        this.grossAnnualSale = grossAnnualSale;
+    }
+
+    public String getGeographicalServiceArea() {
+        return geographicalServiceArea;
+    }
+
+    public void setGeographicalServiceArea(String geographicalServiceArea) {
+        this.geographicalServiceArea = geographicalServiceArea;
+    }
+
+    public String getLegalStructure() {
+        return legalStructure;
+    }
+
+    public void setLegalStructure(String legalStructure) {
+        this.legalStructure = legalStructure;
+    }
+
+    public String getSafetyPolicy() {
+        return safetyPolicy;
+    }
+
+    public void setSafetyPolicy(String safetyPolicy) {
+        this.safetyPolicy = safetyPolicy;
+    }
+
+    public Boolean getInsecured() {
+        return insecured;
+    }
+
+    public void setInsecured(Boolean insecured) {
+        this.insecured = insecured;
+    }
+
+    public Boolean getBonded() {
+        return bonded;
+    }
+
+    public void setBonded(Boolean bonded) {
+        this.bonded = bonded;
+    }
+
+    public Boolean getLiscensed() {
+        return liscensed;
+    }
+
+    public void setLiscensed(Boolean liscensed) {
+        this.liscensed = liscensed;
+    }
+
+    public String getLiscenceNo() {
+        return liscenceNo;
+    }
+
+    public void setLiscenceNo(String liscenceNo) {
+        this.liscenceNo = liscenceNo;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public Boolean getAgreeToShare() {
+        return agreeToShare;
+    }
+
+    public void setAgreeToShare(Boolean agreeToShare) {
+        this.agreeToShare = agreeToShare;
+    }
+
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public Long getLastUpdatedEpochTime() {
+        return lastUpdatedEpochTime;
+    }
+
+    public void setLastUpdatedEpochTime(Long lastUpdatedEpochTime) {
+        this.lastUpdatedEpochTime = lastUpdatedEpochTime;
+    }
+
+    public String getInsuredAmount() {
+        return insuredAmount;
+    }
+
+    public void setInsuredAmount(String insuredAmount) {
+        this.insuredAmount = insuredAmount;
+    }
 }

@@ -9,13 +9,13 @@ public interface MembershipPlanSelectionRepository extends JpaRepository<Members
 
     Boolean existsByUserId(String userId);
 
-    Boolean existsByUserIdAndPlanStatus(String userId, Boolean b);
+//    Boolean existsByUserIdAndPlanStatus(String userId, Boolean b);
 
     MembershipPlanSelection findByUserIdAndPlanStatus(String userId, Boolean b);
 
-    Boolean existsByUserIdAndIsDeleted(String userId, Boolean b);
+    Boolean existsByUserIdAndDeleted(String userId, Boolean b);
 
-    MembershipPlanSelection findByUserIdAndIsDeleted(String userId, Boolean b);
+    MembershipPlanSelection findByUserIdAndDeleted(String userId, Boolean b);
 
     MembershipPlanSelection findByUserId(String userId);
 

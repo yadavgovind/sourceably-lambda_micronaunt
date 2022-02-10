@@ -1870,7 +1870,7 @@ public class ProjectCreationService implements IProjectCreationService {
             List<PBcertificateScorePercentage.ChildCertification> childCertificationList = new ArrayList<>();
             attemptCertificateData.forEach(certificateData -> {
 
-                BCertificatePercentage bCertificatePercentage = certificateData.getBCertificatePercentage();
+                BCertificatePercentage bCertificatePercentage = certificateData.getbCertificatePercentage();
                 long totalScoreEarn = 0l;
                 if (bCertificatePercentage != null) {
                     totalScoreEarn = bCertificatePercentage.getCommentScore()

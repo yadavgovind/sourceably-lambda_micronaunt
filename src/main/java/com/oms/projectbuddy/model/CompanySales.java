@@ -6,8 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "pb_user_company_sales" ,uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id"}),})
@@ -31,4 +30,67 @@ public class CompanySales {
     @Transient
     List<AdditionalAttachment> additionalAttachments;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getAdditionalInformation() {
+        return additionalInformation;
+    }
+
+    public void setAdditionalInformation(String additionalInformation) {
+        this.additionalInformation = additionalInformation;
+    }
+
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public String getGeneralisedNdaDocument() {
+        return generalisedNdaDocument;
+    }
+
+    public void setGeneralisedNdaDocument(String generalisedNdaDocument) {
+        this.generalisedNdaDocument = generalisedNdaDocument;
+    }
+
+    public String getNdaFileName() {
+        return ndaFileName;
+    }
+
+    public void setNdaFileName(String ndaFileName) {
+        this.ndaFileName = ndaFileName;
+    }
+
+    public Long getLastUpdatedEpochTime() {
+        return lastUpdatedEpochTime;
+    }
+
+    public void setLastUpdatedEpochTime(Long lastUpdatedEpochTime) {
+        this.lastUpdatedEpochTime = lastUpdatedEpochTime;
+    }
+
+    public List<AdditionalAttachment> getAdditionalAttachments() {
+        return additionalAttachments;
+    }
+
+    public void setAdditionalAttachments(List<AdditionalAttachment> additionalAttachments) {
+        this.additionalAttachments = additionalAttachments;
+    }
 }

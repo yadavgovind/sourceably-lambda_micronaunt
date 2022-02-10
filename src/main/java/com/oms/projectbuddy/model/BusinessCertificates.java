@@ -6,8 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "pb_business_certificates")
 public class BusinessCertificates {
@@ -37,4 +36,68 @@ public class BusinessCertificates {
 
     @Transient
     private Object providerDataDetails;
+
+    public Long getBusinessCertificateId() {
+        return businessCertificateId;
+    }
+
+    public void setBusinessCertificateId(Long businessCertificateId) {
+        this.businessCertificateId = businessCertificateId;
+    }
+
+    public String getCertificateName() {
+        return certificateName;
+    }
+
+    public void setCertificateName(String certificateName) {
+        this.certificateName = certificateName;
+    }
+
+    public Boolean getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Boolean status) {
+        Status = status;
+    }
+
+    public Boolean getSubCategory() {
+        return isSubCategory;
+    }
+
+    public void setSubCategory(Boolean subCategory) {
+        isSubCategory = subCategory;
+    }
+
+    public BusinessCertificates getParent() {
+        return parent;
+    }
+
+    public void setParent(BusinessCertificates parent) {
+        this.parent = parent;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Object getProviderDataDetails() {
+        return providerDataDetails;
+    }
+
+    public void setProviderDataDetails(Object providerDataDetails) {
+        this.providerDataDetails = providerDataDetails;
+    }
 }

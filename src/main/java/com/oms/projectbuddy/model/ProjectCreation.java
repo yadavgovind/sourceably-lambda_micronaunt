@@ -378,11 +378,11 @@ public class ProjectCreation {
         this.expiryDate = expiryDate;
     }
 
-    public Boolean getNDA() {
+    public Boolean getIsNDA() {
         return isNDA;
     }
 
-    public void setNDA(Boolean NDA) {
+    public void setIsNDA(Boolean NDA) {
         isNDA = NDA;
     }
 
@@ -390,15 +390,15 @@ public class ProjectCreation {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setIsDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 

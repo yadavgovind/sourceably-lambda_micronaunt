@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "b_certificate_percentage")
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class BCertificatePercentage {
@@ -33,5 +33,53 @@ public class BCertificatePercentage {
 
     public BCertificatePercentage(ProviderBCertificateData providerBCertificateData){
         this.providerBCertificateData=providerBCertificateData;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getAttachedScore() {
+        return attachedScore;
+    }
+
+    public void setAttachedScore(Long attachedScore) {
+        this.attachedScore = attachedScore;
+    }
+
+    public Long getCommentScore() {
+        return commentScore;
+    }
+
+    public void setCommentScore(Long commentScore) {
+        this.commentScore = commentScore;
+    }
+
+    public Long getSourceablyVerifiedScore() {
+        return sourceablyVerifiedScore;
+    }
+
+    public void setSourceablyVerifiedScore(Long sourceablyVerifiedScore) {
+        this.sourceablyVerifiedScore = sourceablyVerifiedScore;
+    }
+
+    public Long getValidDocumentDateScore() {
+        return validDocumentDateScore;
+    }
+
+    public void setValidDocumentDateScore(Long validDocumentDateScore) {
+        this.validDocumentDateScore = validDocumentDateScore;
+    }
+
+    public ProviderBCertificateData getProviderBCertificateData() {
+        return providerBCertificateData;
+    }
+
+    public void setProviderBCertificateData(ProviderBCertificateData providerBCertificateData) {
+        this.providerBCertificateData = providerBCertificateData;
     }
 }
