@@ -9,7 +9,7 @@ public interface MembershipPlanSelectionRepository extends JpaRepository<Members
 
     Boolean existsByUserId(String userId);
 
-//    Boolean existsByUserIdAndPlanStatus(String userId, Boolean b);
+    Boolean existsByUserIdAndPlanStatus(String userId, Boolean b);
 
     MembershipPlanSelection findByUserIdAndPlanStatus(String userId, Boolean b);
 

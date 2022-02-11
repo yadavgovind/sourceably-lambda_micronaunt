@@ -122,14 +122,14 @@ public class MembershipPlanService implements IMembershipPlanService {
     @Override
     public MembershipPlanSelection getPlanSelectionByUserId(String userId) throws Exception{
     	
-    	MembershipPlanSelection membershipPlanSelection = membershipPlanSelectionRepository.findByUserIdAndIsDeleted(userId,false);
+    	MembershipPlanSelection membershipPlanSelection = membershipPlanSelectionRepository.findByUserIdAndPlanStatus(userId,false);
     	ExceptionUtils.verifyDataNotExistThenThrowException(membershipPlanSelection);
     	return membershipPlanSelection;
     }
 
     @Override
     public String deletePlanSelectionByUserId(String userId) throws Exception {
-        if(membershipPlanSelectionRepository.existsByUserIdAndIsDeleted(userId,false)){
+        if(membershipPlanSelectionRepository.existsByUserIdAndDeleted(userId,false)){
             MembershipPlanSelection planSelection=membershipPlanSelectionRepository.findByUserIdAndPlanStatus(userId,false);;
             planSelection.setIsDeleted(true);
             return "deleted";

@@ -1,8 +1,10 @@
 package com.oms.projectbuddy.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
-import io.micronaut.data.annotation.MappedEntity;
+@Data
 @Entity
 @Table(name = "banking_information")
 public class BankingInformation {

@@ -61,11 +61,11 @@ public class BusinessCertificates {
         Status = status;
     }
 
-    public Boolean getSubCategory() {
+    public Boolean getIsSubCategory() {
         return isSubCategory;
     }
 
-    public void setSubCategory(Boolean subCategory) {
+    public void setIsSubCategory(Boolean subCategory) {
         isSubCategory = subCategory;
     }
 
@@ -77,11 +77,11 @@ public class BusinessCertificates {
         this.parent = parent;
     }
 
-    public Boolean getDeleted() {
+    public Boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setIsDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
 

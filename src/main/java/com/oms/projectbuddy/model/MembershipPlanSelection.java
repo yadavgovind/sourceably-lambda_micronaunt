@@ -42,6 +42,9 @@ public class MembershipPlanSelection {
     @Column(name="is_deleted")
     private Boolean isDeleted;
 
+
+
+
     public Long getId() {
         return id;
     }
@@ -170,11 +173,11 @@ public class MembershipPlanSelection {
         this.trailExpiryDate = trailExpiryDate;
     }
 
-    public Boolean getDeleted() {
+    public Boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setIsDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
 }
