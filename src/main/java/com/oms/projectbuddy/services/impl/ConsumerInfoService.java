@@ -424,7 +424,7 @@ public class ConsumerInfoService implements IConsumerInfoService {
     public ConsumerSales getConsumerSales(String userId) throws Exception {
         try {
             ConsumerSales consumerSales= consumerSalesRepository.findByUserId(userId);
-            consumerSales.setAdditionalAttachments((Collections.emptyList()/*additionalAttachmentRepository.findBySalesIdAndUserId(consumerSales.getId(),userId)*/));
+            consumerSales.setAdditionalAttachments(additionalAttachmentRepository.findBySalesIdAndUserId(consumerSales.getId(),userId));
             return consumerSales;
         } catch (Exception e) {
             throw new Exception("user not found"+e.getMessage());

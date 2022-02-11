@@ -128,11 +128,11 @@ public class SkillMatrixCategory {
         this.skillMatricDescription = skillMatricDescription;
     }
 
-    public Boolean getDeleted() {
+    public Boolean getIsDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setIsDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
 
@@ -176,11 +176,11 @@ public class SkillMatrixCategory {
         this.updatedBy = updatedBy;
     }
 
-    public Boolean getSubCategory() {
+    public Boolean getIsSubCategory() {
         return isSubCategory;
     }
 
-    public void setSubCategory(Boolean subCategory) {
+    public void setIsSubCategory(Boolean subCategory) {
         isSubCategory = subCategory;
     }
 

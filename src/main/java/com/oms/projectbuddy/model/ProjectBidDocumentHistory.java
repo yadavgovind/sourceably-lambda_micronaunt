@@ -18,6 +18,7 @@ import lombok.Setter;
 
 
 @Entity
+@Builder
 @Table(name = "sbly_supplier_document_history")
 public class ProjectBidDocumentHistory {
     @Id

@@ -1,12 +1,16 @@
 package com.oms.projectbuddy.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 
 @Entity
-//@Builder
-//@NoArgsConstructor
-//@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "sbly_software_evaluation")
 public class SoftwareEvaluation {
 	@Id

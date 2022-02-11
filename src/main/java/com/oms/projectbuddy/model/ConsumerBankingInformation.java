@@ -137,11 +137,11 @@ public class ConsumerBankingInformation {
         this.swiftCode = swiftCode;
     }
 
-    public Boolean getPrimaryAccount() {
+    public Boolean getIsPrimaryAccount() {
         return isPrimaryAccount;
     }
 
-    public void setPrimaryAccount(Boolean primaryAccount) {
+    public void setIsPrimaryAccount(Boolean primaryAccount) {
         isPrimaryAccount = primaryAccount;
     }
 

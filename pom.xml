@@ -135,11 +135,7 @@
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject-java</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.micronaut/micronaut-inject -->
-        <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-inject</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>io.micronaut.beanvalidation</groupId>
@@ -167,19 +163,13 @@
         </dependency>
     </dependencies>
 
-    <build>
+   <!-- <build>
         <plugins>
-            <plugin>
-                <groupId>io.micronaut.build</groupId>
-                <artifactId>micronaut-maven-plugin</artifactId>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- Uncomment to enable incremental compilation -->
-                    <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
 
                     <annotationProcessorPaths
                             combine.children="append">
@@ -193,16 +183,59 @@
                             <artifactId>micronaut-data-processor</artifactId>
                             <version>${micronaut.version}</version>
                         </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-inject-java</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
-                        <arg>-Amicronaut.processing.group=org.knf.dev.demo</arg>
-                        <arg>-Amicronaut.processing.module=micronaut-data-jpa-crud</arg>
+                        <arg>-Amicronaut.processing.group=com.oms.projectbuddy</arg>
+                        <arg>-Amicronaut.processing.module=sourceably-backend</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
 
 
         </plugins>
+    </build>-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-inject-java</artifactId>
+                            <version>${micronaut.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.rodiontsev.maven.plugins</groupId>
+                <artifactId>build-info-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
-
 </project>
